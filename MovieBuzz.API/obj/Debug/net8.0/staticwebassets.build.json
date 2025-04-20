@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "7bwLhQi0fufabJdtILTwlOoOYUAyuYMnU4WIC7of4JE=",
+  "Source": "MovieBuzz.API",
+  "BasePath": "_content/MovieBuzz.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

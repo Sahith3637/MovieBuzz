@@ -1,0 +1,14 @@
+C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.Utils\bin\Debug\net8.0\MovieBuzz.Utils.deps.json
+C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.Utils\bin\Debug\net8.0\MovieBuzz.Utils.runtimeconfig.json
+C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.Utils\bin\Debug\net8.0\MovieBuzz.Utils.dll
+C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.Utils\bin\Debug\net8.0\MovieBuzz.Utils.pdb
+C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.Utils\obj\Debug\net8.0\MovieBuzz.Utils.csproj.AssemblyReference.cache
+C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.Utils\obj\Debug\net8.0\MovieBuzz.Utils.GeneratedMSBuildEditorConfig.editorconfig
+C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.Utils\obj\Debug\net8.0\MovieBuzz.Utils.AssemblyInfoInputs.cache
+C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.Utils\obj\Debug\net8.0\MovieBuzz.Utils.AssemblyInfo.cs
+C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.Utils\obj\Debug\net8.0\MovieBuzz.Utils.csproj.CoreCompileInputs.cache
+C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.Utils\obj\Debug\net8.0\MovieBuzz.Utils.dll
+C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.Utils\obj\Debug\net8.0\refint\MovieBuzz.Utils.dll
+C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.Utils\obj\Debug\net8.0\MovieBuzz.Utils.pdb
+C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.Utils\obj\Debug\net8.0\MovieBuzz.Utils.genruntimeconfig.cache
+C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.Utils\obj\Debug\net8.0\ref\MovieBuzz.Utils.dll
