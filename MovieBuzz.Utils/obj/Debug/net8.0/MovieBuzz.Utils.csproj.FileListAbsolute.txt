@@ -7,6 +7,7 @@ C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.Utils\obj\Debug\net8
 C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.Utils\obj\Debug\net8.0\MovieBuzz.Utils.AssemblyInfoInputs.cache
 C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.Utils\obj\Debug\net8.0\MovieBuzz.Utils.AssemblyInfo.cs
 C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.Utils\obj\Debug\net8.0\MovieBuzz.Utils.csproj.CoreCompileInputs.cache
+C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.Utils\obj\Debug\net8.0\MovieBuzz.Utils.sourcelink.json
 C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.Utils\obj\Debug\net8.0\MovieBuzz.Utils.dll
 C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.Utils\obj\Debug\net8.0\refint\MovieBuzz.Utils.dll
 C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.Utils\obj\Debug\net8.0\MovieBuzz.Utils.pdb

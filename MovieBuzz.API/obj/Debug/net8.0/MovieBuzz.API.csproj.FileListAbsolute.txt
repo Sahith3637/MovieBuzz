@@ -78,6 +78,7 @@ C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.API\obj\Debug\net8.0
 C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.API\obj\Debug\net8.0\MovieBuzz.API.csproj.CoreCompileInputs.cache
 C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.API\obj\Debug\net8.0\MovieBuzz.API.MvcApplicationPartsAssemblyInfo.cs
 C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.API\obj\Debug\net8.0\MovieBuzz.API.MvcApplicationPartsAssemblyInfo.cache
+C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.API\obj\Debug\net8.0\MovieBuzz.API.sourcelink.json
 C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.API\obj\Debug\net8.0\scopedcss\bundle\MovieBuzz.API.styles.css
 C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.API\obj\Debug\net8.0\staticwebassets.build.json
 C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.API\obj\Debug\net8.0\staticwebassets.development.json

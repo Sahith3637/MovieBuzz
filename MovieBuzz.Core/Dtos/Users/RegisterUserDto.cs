@@ -30,7 +30,7 @@ namespace MovieBuzz.Core.Dtos.Users
         public required string PhoneNo { get; set; }
 
         [Required(ErrorMessage = "Username is required")]
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "Username must be between 3 and 50 characters")]
+        [StringLength(30, MinimumLength = 4, ErrorMessage = "Username must be between 4 and 30 characters")]
         public required string UserName { get; set; }
 
         [Required(ErrorMessage = "Password is required")]

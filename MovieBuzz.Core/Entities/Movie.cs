@@ -28,7 +28,7 @@ public partial class Movie
     public decimal Price { get; set; }
 
     [Column("PosterImageURL")]
-    public string? PosterImageUrl { get; set; }
+    public required string PosterImageUrl { get; set; }
 
     [Column("TrailerURL")]
     public string? TrailerUrl { get; set; }

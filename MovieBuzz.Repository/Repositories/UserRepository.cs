@@ -18,7 +18,7 @@ namespace MovieBuzz.Repository.Repositories
         }
 
         public async Task<User> AddUserAsync(User user)
-        {
+        { 
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
             return user;

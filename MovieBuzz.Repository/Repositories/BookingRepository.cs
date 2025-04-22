@@ -19,6 +19,15 @@ namespace MovieBuzz.Repository.Repositories
             _context = context;
         }
 
+        public async Task<IEnumerable<Booking>> GetBookingsByUserNameAsync(string userName)
+        {
+            return await _context.Bookings
+                .Include(b => b.User)
+                .Include(b => b.Movie)
+                .Include(b => b.Show)
+                .Where(b => b.User.UserName == userName)
+                .ToListAsync();
+        }
 
         public async Task<Booking?> GetBookingByIdAsync(int bookingId)
         {

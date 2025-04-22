@@ -10,6 +10,7 @@ namespace MovieBuzz.Repository.Interfaces
     public interface IBookingRepository
     {
         Task<Booking?> GetBookingByIdAsync(int bookingId);
+        Task<IEnumerable<Booking>> GetBookingsByUserNameAsync(string userName);
         Task<Booking> AddBookingAsync(Booking booking);
         Task<IEnumerable<Booking>> GetAllBookingsAsync();
         Task<IEnumerable<Booking>> GetBookingsByUserIdAsync(int userId);

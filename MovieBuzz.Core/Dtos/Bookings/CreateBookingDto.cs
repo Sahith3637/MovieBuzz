@@ -1,5 +1,4 @@
-﻿using MovieBuzz.Core.Entities;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace MovieBuzz.Core.Dtos.Bookings;
 
@@ -11,7 +10,10 @@ public class CreateBookingDto
     [Required(ErrorMessage = "Show ID is required")]
     public int ShowId { get; set; }
 
+    [Required(ErrorMessage = "Movie ID is required")]
+    public int MovieId { get; set; }
+
     [Required(ErrorMessage = "Number of tickets is required")]
-    [Range(1, 10, ErrorMessage = "Number of tickets must be between 1 and 10")]
+    [Range(1, 6, ErrorMessage = "Number of tickets must be between 1 and 6")]
     public int NumberOfTickets { get; set; }
 }

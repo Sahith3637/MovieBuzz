@@ -5,7 +5,7 @@ using MovieBuzz.Services.Interfaces;
 
 namespace MovieBuzz.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ShowsController : ControllerBase
     {

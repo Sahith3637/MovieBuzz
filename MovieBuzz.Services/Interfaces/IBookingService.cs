@@ -11,6 +11,7 @@ namespace MovieBuzz.Services.Interfaces
     {
         Task<BookingResponseDto> GetBookingByIdAsync(int bookingId);
         Task<BookingResponseDto> CreateBookingAsync(CreateBookingDto bookingDto);
+        Task<IEnumerable<BookingResponseDto>> GetBookingsByUserNameAsync(string userName);
         Task<IEnumerable<BookingResponseDto>> GetAllBookingsAsync();
         Task<IEnumerable<BookingResponseDto>> GetBookingsByUserIdAsync(int userId);
         Task<IEnumerable<AdminBookingDto>> GetBookingsByMovieIdAsync(int movieId);

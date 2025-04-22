@@ -5,14 +5,133 @@
     "version": "1.0"
   },
   "paths": {
-    "/api/Bookings/{id}": {
+    "/Bookings": {
+      "post": {
+        "tags": [
+          "Bookings"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBookingDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBookingDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBookingDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Bookings/user/{userName}/{bookingId}": {
       "get": {
         "tags": [
           "Bookings"
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "userName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "bookingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Bookings/user/{userName}": {
+      "get": {
+        "tags": [
+          "Bookings"
+        ],
+        "parameters": [
+          {
+            "name": "userName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Bookings/admin": {
+      "get": {
+        "tags": [
+          "Bookings"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Bookings/admin/movie/{movieId}": {
+      "get": {
+        "tags": [
+          "Bookings"
+        ],
+        "parameters": [
+          {
+            "name": "movieId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Bookings/admin/{bookingId}": {
+      "get": {
+        "tags": [
+          "Bookings"
+        ],
+        "parameters": [
+          {
+            "name": "bookingId",
             "in": "path",
             "required": true,
             "schema": {
@@ -47,7 +166,7 @@
         }
       }
     },
-    "/api/Movies": {
+    "/Movies": {
       "get": {
         "tags": [
           "Movies"
@@ -88,7 +207,7 @@
         }
       }
     },
-    "/api/Movies/active": {
+    "/Movies/active": {
       "get": {
         "tags": [
           "Movies"
@@ -100,7 +219,7 @@
         }
       }
     },
-    "/api/Movies/{id}": {
+    "/Movies/{id}": {
       "get": {
         "tags": [
           "Movies"
@@ -184,7 +303,7 @@
         }
       }
     },
-    "/api/Shows": {
+    "/Shows": {
       "get": {
         "tags": [
           "Shows"
@@ -225,7 +344,7 @@
         }
       }
     },
-    "/api/Shows/{id}": {
+    "/Shows/{id}": {
       "get": {
         "tags": [
           "Shows"
@@ -288,7 +407,7 @@
         }
       }
     },
-    "/api/Shows/movie/{movieId}": {
+    "/Shows/movie/{movieId}": {
       "get": {
         "tags": [
           "Shows"
@@ -323,7 +442,7 @@
         }
       }
     },
-    "/api/Users/register": {
+    "/Users/register": {
       "post": {
         "tags": [
           "Users"
@@ -354,7 +473,7 @@
         }
       }
     },
-    "/api/Users/login": {
+    "/Users/login": {
       "post": {
         "tags": [
           "Users"
@@ -385,7 +504,7 @@
         }
       }
     },
-    "/api/Users": {
+    "/Users": {
       "get": {
         "tags": [
           "Users"
@@ -397,7 +516,7 @@
         }
       }
     },
-    "/api/Users/{id}": {
+    "/Users/{id}": {
       "get": {
         "tags": [
           "Users"
@@ -462,6 +581,36 @@
   },
   "components": {
     "schemas": {
+      "CreateBookingDto": {
+        "required": [
+          "movieId",
+          "numberOfTickets",
+          "showId",
+          "userId"
+        ],
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "showId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "movieId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberOfTickets": {
+            "maximum": 6,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "CreateMovieDto": {
         "required": [
           "ageRestriction",
@@ -664,8 +813,8 @@
             "type": "string"
           },
           "userName": {
-            "maxLength": 50,
-            "minLength": 3,
+            "maxLength": 30,
+            "minLength": 4,
             "type": "string"
           },
           "password": {
