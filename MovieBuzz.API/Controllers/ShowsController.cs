@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MovieBuzz.Core.Dtos.Shows;
-using MovieBuzz.Core.DTOs.Shows;
 using MovieBuzz.Services.Interfaces;
+using MovieBuzz.Core.Exceptions;
+using MovieBuzz.Core.DTOs.Shows;
 
 namespace MovieBuzz.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ShowsController : ControllerBase
     {
@@ -26,8 +27,15 @@ namespace MovieBuzz.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetShow(int id)
         {
-            var show = await _showService.GetShowByIdAsync(id);
-            return Ok(show);
+            try
+            {
+                var show = await _showService.GetShowByIdAsync(id);
+                return Ok(show);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
         }
 
         [HttpGet("movie/{movieId}")]
@@ -38,17 +46,33 @@ namespace MovieBuzz.API.Controllers
         }
 
         [HttpPost]
+        //[ApiExplorerSettings(GroupName = "Admin")]
         public async Task<IActionResult> AddShow([FromBody] CreateShowDto showDto)
         {
-            var show = await _showService.AddShowAsync(showDto);
-            return CreatedAtAction(nameof(GetShow), new { id = show.ShowId }, show);
+            try
+            {
+                var show = await _showService.AddShowAsync(showDto);
+                return CreatedAtAction(nameof(GetShow), new { id = show.ShowId }, show);
+            }
+            catch (NotFoundException ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
         }
 
         [HttpPut("{id}")]
+        //[ApiExplorerSettings(GroupName = "Admin")]
         public async Task<IActionResult> UpdateShow(int id, [FromBody] ShowDto showDto)
         {
-            var show = await _showService.UpdateShowAsync(id, showDto);
-            return Ok(show);
+            try
+            {
+                var show = await _showService.UpdateShowAsync(id, showDto);
+                return Ok(show);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
         }
     }
 }

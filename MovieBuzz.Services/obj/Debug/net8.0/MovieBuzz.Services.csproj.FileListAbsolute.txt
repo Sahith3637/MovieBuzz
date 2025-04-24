@@ -10,6 +10,7 @@ C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.Services\obj\Debug\n
 C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.Services\obj\Debug\net8.0\MovieBuzz.Services.AssemblyInfoInputs.cache
 C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.Services\obj\Debug\net8.0\MovieBuzz.Services.AssemblyInfo.cs
 C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.Services\obj\Debug\net8.0\MovieBuzz.Services.csproj.CoreCompileInputs.cache
+C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.Services\obj\Debug\net8.0\MovieBuzz.Services.sourcelink.json
 C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.Services\obj\Debug\net8.0\MovieBuz.35C19C63.Up2Date
 C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.Services\obj\Debug\net8.0\MovieBuzz.Services.dll
 C:\Applications\MovieBuzz\BusinessLayer\MovieBuzz\MovieBuzz.Services\obj\Debug\net8.0\refint\MovieBuzz.Services.dll

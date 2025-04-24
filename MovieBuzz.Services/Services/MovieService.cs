@@ -4,6 +4,9 @@ using MovieBuzz.Core.Entities;
 using MovieBuzz.Core.Exceptions;
 using MovieBuzz.Repository.Interfaces;
 using MovieBuzz.Services.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MovieBuzz.Services.Services
 {
@@ -21,7 +24,7 @@ namespace MovieBuzz.Services.Services
         public async Task<MovieResponseDto> GetMovieByIdAsync(int movieId)
         {
             var movie = await _unitOfWork.Movies.GetMovieByIdAsync(movieId)
-                ?? throw new NotFoundException($"Movie with ID {movieId} not found");
+                ?? throw MovieBuzzExceptions.NotFound($"Movie with ID {movieId} not found");
 
             return _mapper.Map<MovieResponseDto>(movie);
         }
@@ -42,8 +45,6 @@ namespace MovieBuzz.Services.Services
         {
             var movie = _mapper.Map<Movie>(movieDto);
             movie.IsActive = true;
-            movie.CreatedOn = DateTime.UtcNow;
-            movie.UpdatedOn = DateTime.UtcNow;
 
             await _unitOfWork.Movies.AddMovieAsync(movie);
             await _unitOfWork.CompleteAsync();
@@ -54,27 +55,20 @@ namespace MovieBuzz.Services.Services
         public async Task<MovieResponseDto> UpdateMovieAsync(int movieId, MovieDto movieDto)
         {
             var movie = await _unitOfWork.Movies.GetMovieByIdAsync(movieId)
-                ?? throw new NotFoundException($"Movie with ID {movieId} not found");
+                ?? throw MovieBuzzExceptions.NotFound($"Movie with ID {movieId} not found");
 
             _mapper.Map(movieDto, movie);
-            movie.UpdatedOn = DateTime.UtcNow;
-
             await _unitOfWork.Movies.UpdateMovieAsync(movie);
             await _unitOfWork.CompleteAsync();
 
             return _mapper.Map<MovieResponseDto>(movie);
         }
 
-        public async Task<bool> DeleteMovieAsync(int movieId)
+        public async Task<bool> ToggleMovieStatusAsync(int movieId)
         {
-            var movie = await _unitOfWork.Movies.GetMovieByIdAsync(movieId);
-            if (movie == null) return false;
-
-            movie.IsActive = false;
-            await _unitOfWork.Movies.UpdateMovieAsync(movie);
-            await _unitOfWork.CompleteAsync();
-
-            return true;
+            var result = await _unitOfWork.Movies.ToggleMovieActiveStatusAsync(movieId);
+            if (result) await _unitOfWork.CompleteAsync();
+            return result;
         }
     }
 }

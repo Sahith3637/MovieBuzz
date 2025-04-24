@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MovieBuzz.Core.Dtos.Movies;
 using MovieBuzz.Services.Interfaces;
+using MovieBuzz.Core.Exceptions;
 
 namespace MovieBuzz.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class MoviesController : ControllerBase
     {
@@ -32,11 +33,19 @@ namespace MovieBuzz.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetMovie(int id)
         {
-            var movie = await _movieService.GetMovieByIdAsync(id);
-            return Ok(movie);
+            try
+            {
+                var movie = await _movieService.GetMovieByIdAsync(id);
+                return Ok(movie);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
         }
 
         [HttpPost]
+        //[ApiExplorerSettings(GroupName = "Admin")]
         public async Task<IActionResult> AddMovie([FromBody] CreateMovieDto movieDto)
         {
             var movie = await _movieService.AddMovieAsync(movieDto);
@@ -44,16 +53,25 @@ namespace MovieBuzz.API.Controllers
         }
 
         [HttpPut("{id}")]
+        //[ApiExplorerSettings(GroupName = "Admin")]
         public async Task<IActionResult> UpdateMovie(int id, [FromBody] MovieDto movieDto)
         {
-            var movie = await _movieService.UpdateMovieAsync(id, movieDto);
-            return Ok(movie);
+            try
+            {
+                var movie = await _movieService.UpdateMovieAsync(id, movieDto);
+                return Ok(movie);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMovie(int id)
+        [HttpPatch("{id}/toggle-status")]
+        //[ApiExplorerSettings(GroupName = "Admin")]
+        public async Task<IActionResult> ToggleMovieStatus(int id)
         {
-            var result = await _movieService.DeleteMovieAsync(id);
+            var result = await _movieService.ToggleMovieStatusAsync(id);
             return result ? NoContent() : NotFound();
         }
     }

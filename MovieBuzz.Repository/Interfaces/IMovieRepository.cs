@@ -14,6 +14,6 @@ namespace MovieBuzz.Repository.Interfaces
         Task<IEnumerable<Movie>> GetAllMoviesAsync();
         Task<IEnumerable<Movie>> GetActiveMoviesAsync();
         Task<Movie> UpdateMovieAsync(Movie movie);
-        Task<bool> DeleteMovieAsync(int movieId);
+        Task<bool> ToggleMovieActiveStatusAsync(int movieId);
     }
 }

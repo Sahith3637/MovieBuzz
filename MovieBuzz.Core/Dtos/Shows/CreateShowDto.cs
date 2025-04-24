@@ -18,8 +18,22 @@ public class CreateShowDto
     public string ShowTime { get; set; } = null!;
 
     [Required]
+    [NoPastDate(ErrorMessage = "Show date cannot be in the past")]
     public DateOnly ShowDate { get; set; }
 
     [Range(1, 100)]
     public int AvailableSeats { get; set; }
+}
+
+// Add this custom validation attribute
+public class NoPastDateAttribute : ValidationAttribute
+{
+    public override bool IsValid(object? value)
+    {
+        if (value is DateOnly date)
+        {
+            return date >= DateOnly.FromDateTime(DateTime.Today);
+        }
+        return false;
+    }
 }

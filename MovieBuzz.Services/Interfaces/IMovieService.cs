@@ -14,6 +14,6 @@ namespace MovieBuzz.Services.Interfaces
         Task<IEnumerable<MovieSummaryDto>> GetActiveMoviesAsync();
         Task<MovieResponseDto> AddMovieAsync(CreateMovieDto movieDto);
         Task<MovieResponseDto> UpdateMovieAsync(int movieId, MovieDto movieDto);
-        Task<bool> DeleteMovieAsync(int movieId);
+        Task<bool> ToggleMovieStatusAsync(int movieId);
     }
 }

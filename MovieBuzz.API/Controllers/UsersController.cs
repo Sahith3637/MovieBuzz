@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MovieBuzz.Core.Dtos.Users;
 using MovieBuzz.Services.Interfaces;
+using MovieBuzz.Core.Exceptions;
 
 namespace MovieBuzz.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -18,18 +19,33 @@ namespace MovieBuzz.API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterUserDto registerDto)
         {
-            var user = await _userService.RegisterUserAsync(registerDto);
-            return CreatedAtAction(nameof(GetUser), new { id = user.UserId }, user);
+            try
+            {
+                var user = await _userService.RegisterUserAsync(registerDto);
+                return CreatedAtAction(nameof(GetUser), new { id = user.UserId }, user);
+            }
+            catch (ConflictException ex)
+            {
+                return Conflict(new { Message = ex.Message });
+            }
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
-            var user = await _userService.LoginUserAsync(loginDto);
-            return Ok(user);
+            try
+            {
+                var user = await _userService.LoginUserAsync(loginDto);
+                return Ok(user);
+            }
+            catch (UnauthorizedException ex)
+            {
+                return Unauthorized(new { Message = ex.Message });
+            }
         }
 
         [HttpGet]
+        //[ApiExplorerSettings(GroupName = "Admin")]
         public async Task<IActionResult> GetAllUsers()
         {
             var users = await _userService.GetAllUsersAsync();
@@ -39,8 +55,23 @@ namespace MovieBuzz.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(int id)
         {
-            var user = await _userService.GetUserByIdAsync(id);
-            return Ok(user);
+            try
+            {
+                var user = await _userService.GetUserByIdAsync(id);
+                return Ok(user);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
         }
+
+        //[HttpPatch("{id}/toggle-status")]
+        //[ApiExplorerSettings(GroupName = "Admin")]
+        //public async Task<IActionResult> ToggleUserStatus(int id)
+        //{
+        //    var result = await _userService.ToggleUserStatusAsync(id);
+        //    return result ? NoContent() : NotFound();
+        //}
     }
 }

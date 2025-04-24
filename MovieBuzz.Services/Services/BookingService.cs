@@ -4,6 +4,9 @@ using MovieBuzz.Core.Entities;
 using MovieBuzz.Core.Exceptions;
 using MovieBuzz.Repository.Interfaces;
 using MovieBuzz.Services.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MovieBuzz.Services.Services
 {
@@ -21,37 +24,40 @@ namespace MovieBuzz.Services.Services
         public async Task<BookingResponseDto> GetBookingByIdAsync(int bookingId)
         {
             var booking = await _unitOfWork.Bookings.GetBookingByIdAsync(bookingId)
-                ?? throw new NotFoundException($"Booking with ID {bookingId} not found");
+                ?? throw MovieBuzzExceptions.NotFound($"Booking with ID {bookingId} not found");
 
             return _mapper.Map<BookingResponseDto>(booking);
         }
 
         public async Task<BookingResponseDto> CreateBookingAsync(CreateBookingDto bookingDto)
         {
-            // Validate user exists
-            var user = await _unitOfWork.Users.GetUserByIdAsync(bookingDto.UserId)
-                ?? throw new NotFoundException($"User with ID {bookingDto.UserId} not found");
-
-            // Validate show exists and get with movie details
+            // Get show with movie information
             var show = await _unitOfWork.Shows.GetShowWithMovieAsync(bookingDto.ShowId)
-                ?? throw new NotFoundException($"Show with ID {bookingDto.ShowId} not found");
+                ?? throw MovieBuzzExceptions.NotFound("Show not found");
 
-            // Check available seats
+            // Get user
+            var user = await _unitOfWork.Users.GetUserByIdAsync(bookingDto.UserId)
+                ?? throw MovieBuzzExceptions.NotFound("User not found");
+
+            // Validate seats
             if (show.AvailableSeats < bookingDto.NumberOfTickets)
             {
-                throw new BusinessRuleException("Not enough available seats for this show");
+                throw MovieBuzzExceptions.BusinessRule($"Only {show.AvailableSeats} seats available");
             }
 
             // Create booking
-            var booking = _mapper.Map<Booking>(bookingDto);
-            booking.MovieId = show.MovieId;
-            booking.TotalPrice = bookingDto.NumberOfTickets * show.Movie.Price;
-            booking.CreatedOn = DateTime.UtcNow;
+            var booking = new Booking
+            {
+                UserId = bookingDto.UserId,
+                ShowId = bookingDto.ShowId,
+                MovieId = show.MovieId,
+                NumberOfTickets = bookingDto.NumberOfTickets,
+                TotalPrice = bookingDto.NumberOfTickets * show.Movie.Price
+            };
 
             // Update available seats
             show.AvailableSeats -= bookingDto.NumberOfTickets;
 
-            // Save changes
             await _unitOfWork.Bookings.AddBookingAsync(booking);
             await _unitOfWork.Shows.UpdateShowAsync(show);
             await _unitOfWork.CompleteAsync();
