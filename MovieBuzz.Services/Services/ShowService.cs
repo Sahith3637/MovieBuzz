@@ -5,6 +5,9 @@ using MovieBuzz.Core.Entities;
 using MovieBuzz.Core.Exceptions;
 using MovieBuzz.Repository.Interfaces;
 using MovieBuzz.Services.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MovieBuzz.Services.Services
 {
@@ -22,7 +25,7 @@ namespace MovieBuzz.Services.Services
         public async Task<ShowResponseDto> GetShowByIdAsync(int showId)
         {
             var show = await _unitOfWork.Shows.GetShowWithMovieAsync(showId)
-                ?? throw new NotFoundException($"Show with ID {showId} not found");
+                ?? throw MovieBuzzExceptions.NotFound($"Show with ID {showId} not found");
 
             return _mapper.Map<ShowResponseDto>(show);
         }
@@ -42,7 +45,7 @@ namespace MovieBuzz.Services.Services
         public async Task<ShowResponseDto> AddShowAsync(CreateShowDto showDto)
         {
             var movie = await _unitOfWork.Movies.GetMovieByIdAsync(showDto.MovieId)
-                ?? throw new NotFoundException($"Movie with ID {showDto.MovieId} not found");
+                ?? throw MovieBuzzExceptions.NotFound($"Movie with ID {showDto.MovieId} not found");
 
             var show = _mapper.Map<Show>(showDto);
             await _unitOfWork.Shows.AddShowAsync(show);
@@ -54,7 +57,7 @@ namespace MovieBuzz.Services.Services
         public async Task<ShowResponseDto> UpdateShowAsync(int showId, ShowDto showDto)
         {
             var show = await _unitOfWork.Shows.GetShowByIdAsync(showId)
-                ?? throw new NotFoundException($"Show with ID {showId} not found");
+                ?? throw MovieBuzzExceptions.NotFound($"Show with ID {showId} not found");
 
             _mapper.Map(showDto, show);
             await _unitOfWork.Shows.UpdateShowAsync(show);

@@ -1,7 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MovieBuzz.Core.Entities;
+using MovieBuzz.Core.Exceptions;
 using MovieBuzz.Repository.Context;
 using MovieBuzz.Repository.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MovieBuzz.Repository.Repositories
 {
@@ -12,8 +17,7 @@ namespace MovieBuzz.Repository.Repositories
         public ShowRepository(AppDbContext context)
         {
             _context = context;
-        }
-
+        }   
         public async Task<Show?> GetShowByIdAsync(int showId)
         {
             return await _context.Shows.FindAsync(showId);
@@ -47,7 +51,6 @@ namespace MovieBuzz.Repository.Repositories
         public async Task<Show> UpdateShowAsync(Show show)
         {
             _context.Shows.Update(show);
-            await _context.SaveChangesAsync(); // Only if you want immediate save
             return show;
         }
     }

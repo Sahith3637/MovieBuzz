@@ -1,11 +1,12 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "MovieBuzz.API",
-    "version": "1.0"
+    "title": "MovieBuzz Admin API",
+    "description": "Admin endpoints for MovieBuzz application",
+    "version": "v1"
   },
   "paths": {
-    "/Bookings": {
+    "/api/Bookings": {
       "post": {
         "tags": [
           "Bookings"
@@ -36,7 +37,7 @@
         }
       }
     },
-    "/Bookings/{bookingId}": {
+    "/api/Bookings/{bookingId}": {
       "get": {
         "tags": [
           "Bookings"
@@ -59,26 +60,14 @@
         }
       }
     },
-    "/Bookings/admin": {
-      "get": {
-        "tags": [
-          "Bookings"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/Bookings/admin/movie/{movieId}": {
+    "/api/Bookings/user/{userId}": {
       "get": {
         "tags": [
           "Bookings"
         ],
         "parameters": [
           {
-            "name": "movieId",
+            "name": "userId",
             "in": "path",
             "required": true,
             "schema": {
@@ -101,60 +90,12 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/Movies": {
-      "get": {
-        "tags": [
-          "Movies"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Movies"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateMovieDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateMovieDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateMovieDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
             "description": "OK"
           }
         }
       }
     },
-    "/Movies/active": {
+    "/api/Movies": {
       "get": {
         "tags": [
           "Movies"
@@ -166,7 +107,19 @@
         }
       }
     },
-    "/Movies/{id}": {
+    "/api/Movies/active": {
+      "get": {
+        "tags": [
+          "Movies"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Movies/{id}": {
       "get": {
         "tags": [
           "Movies"
@@ -187,72 +140,9 @@
             "description": "OK"
           }
         }
-      },
-      "put": {
-        "tags": [
-          "Movies"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MovieDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MovieDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/MovieDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
       }
     },
-    "/Movies/{id}/toggle-status": {
-      "patch": {
-        "tags": [
-          "Movies"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/Shows": {
+    "/api/Shows": {
       "get": {
         "tags": [
           "Shows"
@@ -262,38 +152,9 @@
             "description": "OK"
           }
         }
-      },
-      "post": {
-        "tags": [
-          "Shows"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateShowDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateShowDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateShowDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
       }
     },
-    "/Shows/{id}": {
+    "/api/Shows/{id}": {
       "get": {
         "tags": [
           "Shows"
@@ -314,49 +175,9 @@
             "description": "OK"
           }
         }
-      },
-      "put": {
-        "tags": [
-          "Shows"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ShowDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ShowDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ShowDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
       }
     },
-    "/Shows/movie/{movieId}": {
+    "/api/Shows/movie/{movieId}": {
       "get": {
         "tags": [
           "Shows"
@@ -391,7 +212,7 @@
         }
       }
     },
-    "/Users/register": {
+    "/api/Users/register": {
       "post": {
         "tags": [
           "Users"
@@ -422,7 +243,7 @@
         }
       }
     },
-    "/Users/login": {
+    "/api/Users/login": {
       "post": {
         "tags": [
           "Users"
@@ -453,19 +274,7 @@
         }
       }
     },
-    "/Users": {
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/Users/{id}": {
+    "/api/Users/{id}": {
       "get": {
         "tags": [
           "Users"
@@ -560,94 +369,6 @@
         },
         "additionalProperties": false
       },
-      "CreateMovieDto": {
-        "required": [
-          "ageRestriction",
-          "description",
-          "duration",
-          "genre",
-          "movieName",
-          "posterImageUrl",
-          "price",
-          "trailerUrl"
-        ],
-        "type": "object",
-        "properties": {
-          "movieName": {
-            "maxLength": 100,
-            "minLength": 0,
-            "type": "string"
-          },
-          "genre": {
-            "maxLength": 50,
-            "minLength": 0,
-            "type": "string"
-          },
-          "ageRestriction": {
-            "maximum": 22,
-            "minimum": 0,
-            "type": "integer",
-            "format": "int32"
-          },
-          "duration": {
-            "maximum": 300,
-            "minimum": 1,
-            "type": "integer",
-            "format": "int32"
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "price": {
-            "maximum": 1000,
-            "minimum": 0.01,
-            "type": "number",
-            "format": "double"
-          },
-          "posterImageUrl": {
-            "type": "string",
-            "format": "uri",
-            "nullable": true
-          },
-          "trailerUrl": {
-            "type": "string",
-            "format": "uri",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "CreateShowDto": {
-        "required": [
-          "movieId",
-          "showDate",
-          "showTime"
-        ],
-        "type": "object",
-        "properties": {
-          "movieId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "showTime": {
-            "maxLength": 20,
-            "minLength": 0,
-            "type": "string"
-          },
-          "showDate": {
-            "type": "string",
-            "format": "date"
-          },
-          "availableSeats": {
-            "maximum": 100,
-            "minimum": 1,
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
       "LoginDto": {
         "required": [
           "password",
@@ -662,64 +383,6 @@
           "password": {
             "minLength": 1,
             "type": "string"
-          }
-        },
-        "additionalProperties": false
-      },
-      "MovieDto": {
-        "required": [
-          "ageRestriction",
-          "description",
-          "duration",
-          "genre",
-          "movieName",
-          "posterImageUrl",
-          "price",
-          "trailerUrl"
-        ],
-        "type": "object",
-        "properties": {
-          "movieName": {
-            "maxLength": 100,
-            "minLength": 0,
-            "type": "string"
-          },
-          "genre": {
-            "maxLength": 50,
-            "minLength": 0,
-            "type": "string"
-          },
-          "ageRestriction": {
-            "maximum": 22,
-            "minimum": 0,
-            "type": "integer",
-            "format": "int32"
-          },
-          "duration": {
-            "maximum": 300,
-            "minimum": 1,
-            "type": "integer",
-            "format": "int32"
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "price": {
-            "maximum": 1000,
-            "minimum": 0.01,
-            "type": "number",
-            "format": "double"
-          },
-          "posterImageUrl": {
-            "type": "string",
-            "format": "uri",
-            "nullable": true
-          },
-          "trailerUrl": {
-            "type": "string",
-            "format": "uri",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -774,41 +437,6 @@
         },
         "additionalProperties": false
       },
-      "ShowDto": {
-        "required": [
-          "availableSeats",
-          "movieId",
-          "showDate",
-          "showTime"
-        ],
-        "type": "object",
-        "properties": {
-          "movieId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "showTime": {
-            "minLength": 1,
-            "pattern": "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$",
-            "type": "string"
-          },
-          "showDate": {
-            "type": "string",
-            "format": "date"
-          },
-          "availableSeats": {
-            "maximum": 100,
-            "minimum": 1,
-            "type": "integer",
-            "format": "int32"
-          },
-          "isHouseFull": {
-            "type": "boolean",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
       "WeatherForecast": {
         "type": "object",
         "properties": {
@@ -832,6 +460,19 @@
         },
         "additionalProperties": false
       }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "JWT Authorization header using the Bearer scheme",
+        "name": "Authorization",
+        "in": "header"
+      }
     }
-  }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
 }

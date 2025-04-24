@@ -17,7 +17,23 @@
   },
   {
     "ContainingType": "MovieBuzz.API.Controllers.BookingsController",
-    "Method": "GetAllBookingsAdmin",
+    "Method": "GetBookingById",
+    "RelativePath": "Bookings/{bookingId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bookingId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MovieBuzz.API.Controllers.BookingsController",
+    "Method": "GetAllBookings",
     "RelativePath": "Bookings/admin",
     "HttpMethod": "GET",
     "IsController": true,
@@ -27,23 +43,7 @@
   },
   {
     "ContainingType": "MovieBuzz.API.Controllers.BookingsController",
-    "Method": "GetBookingAdmin",
-    "RelativePath": "Bookings/admin/{bookingId}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "bookingId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "MovieBuzz.API.Controllers.BookingsController",
-    "Method": "GetBookingsByMovieAdmin",
+    "Method": "GetBookingsByMovie",
     "RelativePath": "Bookings/admin/movie/{movieId}",
     "HttpMethod": "GET",
     "IsController": true,
@@ -51,43 +51,6 @@
     "Parameters": [
       {
         "Name": "movieId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "MovieBuzz.API.Controllers.BookingsController",
-    "Method": "GetUserBookings",
-    "RelativePath": "Bookings/user/{userName}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "userName",
-        "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "MovieBuzz.API.Controllers.BookingsController",
-    "Method": "GetUserBooking",
-    "RelativePath": "Bookings/user/{userName}/{bookingId}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "userName",
-        "Type": "System.String",
-        "IsRequired": true
-      },
-      {
-        "Name": "bookingId",
         "Type": "System.Int32",
         "IsRequired": true
       }
@@ -159,9 +122,9 @@
   },
   {
     "ContainingType": "MovieBuzz.API.Controllers.MoviesController",
-    "Method": "DeleteMovie",
-    "RelativePath": "Movies/{id}",
-    "HttpMethod": "DELETE",
+    "Method": "ToggleMovieStatus",
+    "RelativePath": "Movies/{id}/toggle-status",
+    "HttpMethod": "PATCH",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -342,7 +305,7 @@
     "Parameters": [
       {
         "Name": "registerDto",
-        "Type": "MovieBuzz.Core.Dtos.Users.RegisterUserDto",
+        "Type": "RegisterUserDto",
         "IsRequired": true
       }
     ],

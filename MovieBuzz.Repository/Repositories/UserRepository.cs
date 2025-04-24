@@ -4,6 +4,7 @@ using MovieBuzz.Core.Exceptions;
 using MovieBuzz.Repository.Context;
 using MovieBuzz.Repository.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MovieBuzz.Repository.Repositories
@@ -12,15 +13,11 @@ namespace MovieBuzz.Repository.Repositories
     {
         private readonly AppDbContext _context;
 
-        public UserRepository(AppDbContext context)
-        {
-            _context = context;
-        }
+        public UserRepository(AppDbContext context) => _context = context;
 
         public async Task<User> AddUserAsync(User user)
-        { 
+        {
             await _context.Users.AddAsync(user);
-            await _context.SaveChangesAsync();
             return user;
         }
 
@@ -33,12 +30,33 @@ namespace MovieBuzz.Repository.Repositories
         public async Task<User> GetUserByIdAsync(int id)
         {
             return await _context.Users.FindAsync(id)
-                   ?? throw new MovieNotFoundException($"User with ID {id} not found");
+                   ?? throw MovieBuzzExceptions.NotFound($"User with ID {id} not found");
         }
 
         public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
             return await _context.Users.ToListAsync();
         }
+
+        public async Task<User?> GetUserByPhoneAsync(string phoneNo)
+        {
+            return await _context.Users
+                .FirstOrDefaultAsync(u => u.PhoneNo == phoneNo);
+        }
+
+        public async Task<User?> GetUserByEmailAsync(string email)
+        {
+            return await _context.Users
+                .FirstOrDefaultAsync(u => u.EmailId == email); 
+        }
+
+        //public async Task<bool> ToggleUserActiveStatusAsync(int userId)
+        //{
+        //    var user = await _context.Users.FindAsync(userId);
+        //    if (user == null) return false;
+
+        //    user.IsActive = !user.IsActive;
+        //    return true;
+        //}
     }
 }

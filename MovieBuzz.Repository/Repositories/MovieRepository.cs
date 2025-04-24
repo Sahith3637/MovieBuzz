@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MovieBuzz.Core.Entities;
+using MovieBuzz.Core.Exceptions;
 using MovieBuzz.Repository.Context;
 using MovieBuzz.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MovieBuzz.Repository.Repositories
@@ -45,15 +45,15 @@ namespace MovieBuzz.Repository.Repositories
         public Task<Movie> UpdateMovieAsync(Movie movie)
         {
             _context.Movies.Update(movie);
-            return Task.FromResult(movie); // No async needed
+            return Task.FromResult(movie);
         }
 
-        public async Task<bool> DeleteMovieAsync(int movieId)
+        public async Task<bool> ToggleMovieActiveStatusAsync(int movieId)
         {
             var movie = await _context.Movies.FindAsync(movieId);
             if (movie == null) return false;
 
-            movie.IsActive = false;
+            movie.IsActive = !movie.IsActive;
             return true;
         }
     }
