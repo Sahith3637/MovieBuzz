@@ -24,7 +24,7 @@ public class CreateShowDto
     [Range(1, 100)]
     public int AvailableSeats { get; set; }
 }
-
+  
 // Add this custom validation attribute
 public class NoPastDateAttribute : ValidationAttribute
 {

@@ -4,7 +4,6 @@ using MovieBuzz.Core.Exceptions;
 using MovieBuzz.Repository.Context;
 using MovieBuzz.Repository.Interfaces;
 
-
 namespace MovieBuzz.Repository.Repositories
 {
     public class BookingRepository : IBookingRepository

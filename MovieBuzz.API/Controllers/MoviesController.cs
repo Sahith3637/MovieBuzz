@@ -72,7 +72,10 @@ namespace MovieBuzz.API.Controllers
         public async Task<IActionResult> ToggleMovieStatus(int id)
         {
             var result = await _movieService.ToggleMovieStatusAsync(id);
+            Response.Headers.Append("X-Status-Message", "Status toggled successfully");
             return result ? NoContent() : NotFound();
         }
+
+
     }
 }
