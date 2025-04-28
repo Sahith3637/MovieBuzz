@@ -45,6 +45,11 @@ namespace MovieBuzz.Services.Services
                 throw MovieBuzzExceptions.BusinessRule($"Only {show.AvailableSeats} seats available");
             }
 
+            if (!show.Movie.IsActive)
+            {
+                throw MovieBuzzExceptions.BusinessRule("Cannot book tickets for an inactive movie");
+            }
+
             // Create booking
             var booking = new Booking
             {
@@ -84,3 +89,4 @@ namespace MovieBuzz.Services.Services
         }
     }
 }
+
