@@ -1,9 +1,5 @@
 ﻿
 
-
-
-
-
 using AutoMapper;
 using MovieBuzz.Core.Dtos.Bookings;
 using MovieBuzz.Core.Dtos.Movies;
@@ -70,12 +66,30 @@ public class MappingProfile : Profile
 
         // ShowDto → Show
         CreateMap<ShowDto, Show>();
+        CreateMap<Show, ShowDto>();
 
-        // Show → ShowResponseDto
+        //Show → ShowResponseDto
         CreateMap<Show, ShowResponseDto>()
-            .ForMember(dest => dest.Movie,
-                opt => opt.MapFrom(src => src.Movie));
+       .IncludeBase<Show, ShowDto>();
+        //     .ForMember(dest => dest.MovieName,
+        //opt => opt.MapFrom(src => src.Movie.MovieName));
+
+        CreateMap<Show, ShowWithMovieDetailsDto>()
+       .IncludeBase<Show, ShowDto>()
+       .ForMember(dest => dest.ShowId, opt => opt.MapFrom(src => src.ShowId))
+       .ForMember(dest => dest.MovieName, opt => opt.MapFrom(src => src.Movie.MovieName))
+       .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.Movie.Genre))
+       .ForMember(dest => dest.AgeRestriction, opt => opt.MapFrom(src => src.Movie.AgeRestriction))
+       .ForMember(dest => dest.Duration, opt => opt.MapFrom(src => src.Movie.Duration))
+       .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Movie.Description))
+       .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Movie.Price))
+       .ForMember(dest => dest.PosterImageUrl, opt => opt.MapFrom(src => src.Movie.PosterImageUrl))
+       .ForMember(dest => dest.TrailerUrl, opt => opt.MapFrom(src => src.Movie.TrailerUrl))
+       .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => src.Movie.IsActive));
+
     }
+
+
 
     private void CreateBookingMappings()
     {

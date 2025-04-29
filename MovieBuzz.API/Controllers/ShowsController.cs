@@ -20,8 +20,24 @@ namespace MovieBuzz.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllShows()
         {
-            var shows = await _showService.GetAllShowsAsync();
-            return Ok(shows);
+            try
+            {
+                var shows = await _showService.GetAllShowsAsync();
+                return Ok(new
+                {
+                    Success = true,
+                    Data = shows,
+                    Message = "All shows retrieved successfully"
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    Success = false,
+                    Message = $"Error retrieving shows: {ex.Message}"
+                });
+            }
         }
 
         [HttpGet("{id}")]
@@ -30,48 +46,113 @@ namespace MovieBuzz.API.Controllers
             try
             {
                 var show = await _showService.GetShowByIdAsync(id);
-                return Ok(show);
+                return Ok(new
+                {
+                    Success = true,
+                    Data = show,
+                    Message = "Show retrieved successfully"
+                });
             }
-            catch (NotFoundException)
+            catch (NotFoundException ex)
             {
-                return NotFound();
+                return NotFound(new
+                {
+                    Success = false,
+                    Message = ex.Message
+                });
             }
         }
 
         [HttpGet("movie/{movieId}")]
         public async Task<IActionResult> GetShowsByMovie(int movieId)
         {
-            var shows = await _showService.GetShowsByMovieIdAsync(movieId);
-            return Ok(shows);
+            try
+            {
+                var shows = await _showService.GetShowsByMovieIdAsync(movieId);
+                return Ok(new
+                {
+                    Success = true,
+                    Data = shows,
+                    Message = $"Shows for movie {movieId} retrieved successfully"
+                });
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new
+                {
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    Success = false,
+                    Message = $"Error retrieving shows for movie: {ex.Message}"
+                });
+            }
         }
 
         [HttpPost]
-        //[ApiExplorerSettings(GroupName = "Admin")]
         public async Task<IActionResult> AddShow([FromBody] CreateShowDto showDto)
         {
             try
             {
                 var show = await _showService.AddShowAsync(showDto);
-                return CreatedAtAction(nameof(GetShow), new { id = show.ShowId }, show);
+                return CreatedAtAction(nameof(GetShow), new { id = show.ShowId }, new
+                {
+                    Success = true,
+                    Data = show,
+                    Message = "Show added successfully"
+                });
             }
             catch (NotFoundException ex)
             {
-                return BadRequest(new { Message = ex.Message });
+                return BadRequest(new
+                {
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    Success = false,
+                    Message = $"Error adding show: {ex.Message}"
+                });
             }
         }
 
         [HttpPut("{id}")]
-        //[ApiExplorerSettings(GroupName = "Admin")]
         public async Task<IActionResult> UpdateShow(int id, [FromBody] ShowDto showDto)
         {
             try
             {
                 var show = await _showService.UpdateShowAsync(id, showDto);
-                return Ok(show);
+                return Ok(new
+                {
+                    Success = true,
+                    Data = show,
+                    Message = "Show updated successfully"
+                });
             }
-            catch (NotFoundException)
+            catch (NotFoundException ex)
             {
-                return NotFound();
+                return NotFound(new
+                {
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    Success = false,
+                    Message = $"Error updating show: {ex.Message}"
+                });
             }
         }
     }

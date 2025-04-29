@@ -620,6 +620,7 @@
       },
       "CreateShowDto": {
         "required": [
+          "availableSeats",
           "movieId",
           "showDate",
           "showTime"
@@ -631,8 +632,8 @@
             "format": "int32"
           },
           "showTime": {
-            "maxLength": 20,
-            "minLength": 0,
+            "minLength": 1,
+            "pattern": "^(1[0-2]|0?[1-9]):[0-5][0-9] (AM|PM)$",
             "type": "string"
           },
           "showDate": {
@@ -788,9 +789,8 @@
             "format": "int32"
           },
           "showTime": {
-            "minLength": 1,
-            "pattern": "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$",
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "showDate": {
             "type": "string",

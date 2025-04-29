@@ -22,11 +22,28 @@ namespace MovieBuzz.API.Controllers
             try
             {
                 var user = await _userService.RegisterUserAsync(registerDto);
-                return CreatedAtAction(nameof(GetUser), new { id = user.UserId }, user);
+                return CreatedAtAction(nameof(GetUser), new { id = user.UserId }, new
+                {
+                    Success = true,
+                    Data = user,
+                    Message = "User registered successfully"
+                });
             }
             catch (ConflictException ex)
             {
-                return Conflict(new { Message = ex.Message });
+                return Conflict(new
+                {
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    Success = false,
+                    Message = $"Error registering user: {ex.Message}"
+                });
             }
         }
 
@@ -36,20 +53,52 @@ namespace MovieBuzz.API.Controllers
             try
             {
                 var user = await _userService.LoginUserAsync(loginDto);
-                return Ok(user);
+                return Ok(new
+                {
+                    Success = true,
+                    Data = user,
+                    Message = "Login successful"
+                });
             }
             catch (UnauthorizedException ex)
             {
-                return Unauthorized(new { Message = ex.Message });
+                return Unauthorized(new
+                {
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    Success = false,
+                    Message = $"Error during login: {ex.Message}"
+                });
             }
         }
 
         [HttpGet]
-        //[ApiExplorerSettings(GroupName = "Admin")]
         public async Task<IActionResult> GetAllUsers()
         {
-            var users = await _userService.GetAllUsersAsync();
-            return Ok(users);
+            try
+            {
+                var users = await _userService.GetAllUsersAsync();
+                return Ok(new
+                {
+                    Success = true,
+                    Data = users,
+                    Message = "All users retrieved successfully"
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    Success = false,
+                    Message = $"Error retrieving users: {ex.Message}"
+                });
+            }
         }
 
         [HttpGet("{id}")]
@@ -58,20 +107,59 @@ namespace MovieBuzz.API.Controllers
             try
             {
                 var user = await _userService.GetUserByIdAsync(id);
-                return Ok(user);
+                return Ok(new
+                {
+                    Success = true,
+                    Data = user,
+                    Message = "User retrieved successfully"
+                });
             }
-            catch (NotFoundException)
+            catch (NotFoundException ex)
             {
-                return NotFound();
+                return NotFound(new
+                {
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    Success = false,
+                    Message = $"Error retrieving user: {ex.Message}"
+                });
             }
         }
 
-        //[HttpPatch("{id}/toggle-status")]
-        //[ApiExplorerSettings(GroupName = "Admin")]
-        //public async Task<IActionResult> ToggleUserStatus(int id)
-        //{
-        //    var result = await _userService.ToggleUserStatusAsync(id);
-        //    return result ? NoContent() : NotFound();
-        //}
+        // [HttpPatch("{id}/toggle-status")]
+        // public async Task<IActionResult> ToggleUserStatus(int id)
+        // {
+        //     try
+        //     {
+        //         var result = await _userService.ToggleUserStatusAsync(id);
+        //         if (result)
+        //         {
+        //             return Ok(new
+        //             {
+        //                 Success = true,
+        //                 Message = "User status toggled successfully"
+        //             });
+        //         }
+        //         return NotFound(new
+        //         {
+        //             Success = false,
+        //             Message = "User not found"
+        //         });
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         return StatusCode(500, new
+        //         {
+        //             Success = false,
+        //             Message = $"Error toggling user status: {ex.Message}"
+        //         });
+        //     }
+        // }
     }
 }

@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Applications\\MovieBuzz\\Bussinessalayer\\MovieBuzz\\MovieBuzz.API\\MovieBuzz.API.csproj": {}
+    "C:\\Applications\\MovieBuzz\\Back_End\\MovieBuzz\\MovieBuzz.API\\MovieBuzz.API.csproj": {}
   },
   "projects": {
-    "C:\\Applications\\MovieBuzz\\Bussinessalayer\\MovieBuzz\\MovieBuzz.API\\MovieBuzz.API.csproj": {
+    "C:\\Applications\\MovieBuzz\\Back_End\\MovieBuzz\\MovieBuzz.API\\MovieBuzz.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Applications\\MovieBuzz\\Bussinessalayer\\MovieBuzz\\MovieBuzz.API\\MovieBuzz.API.csproj",
+        "projectUniqueName": "C:\\Applications\\MovieBuzz\\Back_End\\MovieBuzz\\MovieBuzz.API\\MovieBuzz.API.csproj",
         "projectName": "MovieBuzz.API",
-        "projectPath": "C:\\Applications\\MovieBuzz\\Bussinessalayer\\MovieBuzz\\MovieBuzz.API\\MovieBuzz.API.csproj",
-        "packagesPath": "C:\\Users\\Sai Sirisha Reddy\\.nuget\\packages\\",
-        "outputPath": "C:\\Applications\\MovieBuzz\\Bussinessalayer\\MovieBuzz\\MovieBuzz.API\\obj\\",
+        "projectPath": "C:\\Applications\\MovieBuzz\\Back_End\\MovieBuzz\\MovieBuzz.API\\MovieBuzz.API.csproj",
+        "packagesPath": "C:\\Users\\Sai Sahith Ajju\\.nuget\\packages\\",
+        "outputPath": "C:\\Applications\\MovieBuzz\\Back_End\\MovieBuzz\\MovieBuzz.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Sai Sirisha Reddy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Sai Sahith Ajju\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -32,11 +32,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Applications\\MovieBuzz\\Bussinessalayer\\MovieBuzz\\MovieBuzz.Repository\\MovieBuzz.Repository.csproj": {
-                "projectPath": "C:\\Applications\\MovieBuzz\\Bussinessalayer\\MovieBuzz\\MovieBuzz.Repository\\MovieBuzz.Repository.csproj"
+              "C:\\Applications\\MovieBuzz\\Back_End\\MovieBuzz\\MovieBuzz.Repository\\MovieBuzz.Repository.csproj": {
+                "projectPath": "C:\\Applications\\MovieBuzz\\Back_End\\MovieBuzz\\MovieBuzz.Repository\\MovieBuzz.Repository.csproj"
               },
-              "C:\\Applications\\MovieBuzz\\Bussinessalayer\\MovieBuzz\\MovieBuzz.Services\\MovieBuzz.Services.csproj": {
-                "projectPath": "C:\\Applications\\MovieBuzz\\Bussinessalayer\\MovieBuzz\\MovieBuzz.Services\\MovieBuzz.Services.csproj"
+              "C:\\Applications\\MovieBuzz\\Back_End\\MovieBuzz\\MovieBuzz.Services\\MovieBuzz.Services.csproj": {
+                "projectPath": "C:\\Applications\\MovieBuzz\\Back_End\\MovieBuzz\\MovieBuzz.Services\\MovieBuzz.Services.csproj"
               }
             }
           }
@@ -85,24 +85,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Applications\\MovieBuzz\\Bussinessalayer\\MovieBuzz\\MovieBuzz.Core\\MovieBuzz.Core.csproj": {
+    "C:\\Applications\\MovieBuzz\\Back_End\\MovieBuzz\\MovieBuzz.Core\\MovieBuzz.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Applications\\MovieBuzz\\Bussinessalayer\\MovieBuzz\\MovieBuzz.Core\\MovieBuzz.Core.csproj",
+        "projectUniqueName": "C:\\Applications\\MovieBuzz\\Back_End\\MovieBuzz\\MovieBuzz.Core\\MovieBuzz.Core.csproj",
         "projectName": "MovieBuzz.Core",
-        "projectPath": "C:\\Applications\\MovieBuzz\\Bussinessalayer\\MovieBuzz\\MovieBuzz.Core\\MovieBuzz.Core.csproj",
-        "packagesPath": "C:\\Users\\Sai Sirisha Reddy\\.nuget\\packages\\",
-        "outputPath": "C:\\Applications\\MovieBuzz\\Bussinessalayer\\MovieBuzz\\MovieBuzz.Core\\obj\\",
+        "projectPath": "C:\\Applications\\MovieBuzz\\Back_End\\MovieBuzz\\MovieBuzz.Core\\MovieBuzz.Core.csproj",
+        "packagesPath": "C:\\Users\\Sai Sahith Ajju\\.nuget\\packages\\",
+        "outputPath": "C:\\Applications\\MovieBuzz\\Back_End\\MovieBuzz\\MovieBuzz.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Sai Sirisha Reddy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Sai Sahith Ajju\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -160,24 +160,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Applications\\MovieBuzz\\Bussinessalayer\\MovieBuzz\\MovieBuzz.Repository\\MovieBuzz.Repository.csproj": {
+    "C:\\Applications\\MovieBuzz\\Back_End\\MovieBuzz\\MovieBuzz.Repository\\MovieBuzz.Repository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Applications\\MovieBuzz\\Bussinessalayer\\MovieBuzz\\MovieBuzz.Repository\\MovieBuzz.Repository.csproj",
+        "projectUniqueName": "C:\\Applications\\MovieBuzz\\Back_End\\MovieBuzz\\MovieBuzz.Repository\\MovieBuzz.Repository.csproj",
         "projectName": "MovieBuzz.Repository",
-        "projectPath": "C:\\Applications\\MovieBuzz\\Bussinessalayer\\MovieBuzz\\MovieBuzz.Repository\\MovieBuzz.Repository.csproj",
-        "packagesPath": "C:\\Users\\Sai Sirisha Reddy\\.nuget\\packages\\",
-        "outputPath": "C:\\Applications\\MovieBuzz\\Bussinessalayer\\MovieBuzz\\MovieBuzz.Repository\\obj\\",
+        "projectPath": "C:\\Applications\\MovieBuzz\\Back_End\\MovieBuzz\\MovieBuzz.Repository\\MovieBuzz.Repository.csproj",
+        "packagesPath": "C:\\Users\\Sai Sahith Ajju\\.nuget\\packages\\",
+        "outputPath": "C:\\Applications\\MovieBuzz\\Back_End\\MovieBuzz\\MovieBuzz.Repository\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Sai Sirisha Reddy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Sai Sahith Ajju\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -192,8 +192,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Applications\\MovieBuzz\\Bussinessalayer\\MovieBuzz\\MovieBuzz.Core\\MovieBuzz.Core.csproj": {
-                "projectPath": "C:\\Applications\\MovieBuzz\\Bussinessalayer\\MovieBuzz\\MovieBuzz.Core\\MovieBuzz.Core.csproj"
+              "C:\\Applications\\MovieBuzz\\Back_End\\MovieBuzz\\MovieBuzz.Core\\MovieBuzz.Core.csproj": {
+                "projectPath": "C:\\Applications\\MovieBuzz\\Back_End\\MovieBuzz\\MovieBuzz.Core\\MovieBuzz.Core.csproj"
               }
             }
           }
@@ -241,24 +241,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Applications\\MovieBuzz\\Bussinessalayer\\MovieBuzz\\MovieBuzz.Services\\MovieBuzz.Services.csproj": {
+    "C:\\Applications\\MovieBuzz\\Back_End\\MovieBuzz\\MovieBuzz.Services\\MovieBuzz.Services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Applications\\MovieBuzz\\Bussinessalayer\\MovieBuzz\\MovieBuzz.Services\\MovieBuzz.Services.csproj",
+        "projectUniqueName": "C:\\Applications\\MovieBuzz\\Back_End\\MovieBuzz\\MovieBuzz.Services\\MovieBuzz.Services.csproj",
         "projectName": "MovieBuzz.Services",
-        "projectPath": "C:\\Applications\\MovieBuzz\\Bussinessalayer\\MovieBuzz\\MovieBuzz.Services\\MovieBuzz.Services.csproj",
-        "packagesPath": "C:\\Users\\Sai Sirisha Reddy\\.nuget\\packages\\",
-        "outputPath": "C:\\Applications\\MovieBuzz\\Bussinessalayer\\MovieBuzz\\MovieBuzz.Services\\obj\\",
+        "projectPath": "C:\\Applications\\MovieBuzz\\Back_End\\MovieBuzz\\MovieBuzz.Services\\MovieBuzz.Services.csproj",
+        "packagesPath": "C:\\Users\\Sai Sahith Ajju\\.nuget\\packages\\",
+        "outputPath": "C:\\Applications\\MovieBuzz\\Back_End\\MovieBuzz\\MovieBuzz.Services\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Sai Sirisha Reddy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Sai Sahith Ajju\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -273,8 +273,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Applications\\MovieBuzz\\Bussinessalayer\\MovieBuzz\\MovieBuzz.Repository\\MovieBuzz.Repository.csproj": {
-                "projectPath": "C:\\Applications\\MovieBuzz\\Bussinessalayer\\MovieBuzz\\MovieBuzz.Repository\\MovieBuzz.Repository.csproj"
+              "C:\\Applications\\MovieBuzz\\Back_End\\MovieBuzz\\MovieBuzz.Repository\\MovieBuzz.Repository.csproj": {
+                "projectPath": "C:\\Applications\\MovieBuzz\\Back_End\\MovieBuzz\\MovieBuzz.Repository\\MovieBuzz.Repository.csproj"
               }
             }
           }
@@ -310,7 +310,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

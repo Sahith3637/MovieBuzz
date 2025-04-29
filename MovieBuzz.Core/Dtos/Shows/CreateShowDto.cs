@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using System.ComponentModel.DataAnnotations;
 
 namespace MovieBuzz.Core.DTOs.Shows;
@@ -14,18 +9,20 @@ public class CreateShowDto
     public int MovieId { get; set; }
 
     [Required]
-    [StringLength(20)]
+    [RegularExpression(@"^(1[0-2]|0?[1-9]):[0-5][0-9] (AM|PM)$",
+        ErrorMessage = "Show time must be in 12-hour format (e.g., 9:00 AM or 12:30 PM)")]
     public string ShowTime { get; set; } = null!;
 
     [Required]
-    [NoPastDate(ErrorMessage = "Show date cannot be in the past")]
+    [NoPastDate]
+    [WithinFourDays(ErrorMessage = "Show date cannot be more than 4 days from today")]
     public DateOnly ShowDate { get; set; }
 
-    [Range(1, 100)]
+    [Required]
+    [Range(1, 100, ErrorMessage = "Available seats must be between 1 and 100")]
     public int AvailableSeats { get; set; }
 }
-  
-// Add this custom validation attribute
+
 public class NoPastDateAttribute : ValidationAttribute
 {
     public override bool IsValid(object? value)
@@ -33,6 +30,19 @@ public class NoPastDateAttribute : ValidationAttribute
         if (value is DateOnly date)
         {
             return date >= DateOnly.FromDateTime(DateTime.Today);
+        }
+        return false;
+    }
+}
+
+public class WithinFourDaysAttribute : ValidationAttribute
+{
+    public override bool IsValid(object? value)
+    {
+        if (value is DateOnly date)
+        {
+            var maxDate = DateOnly.FromDateTime(DateTime.Today.AddDays(4));
+            return date <= maxDate;
         }
         return false;
     }

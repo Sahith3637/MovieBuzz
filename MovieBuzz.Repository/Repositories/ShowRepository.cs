@@ -34,6 +34,22 @@ namespace MovieBuzz.Repository.Repositories
         {
             return await _context.Shows.ToListAsync();
         }
+        // Example fix for async warning
+        public async Task<IEnumerable<Show>> GetShowsWithMovieDetailsByMovieIdAsync(int movieId)
+        {
+            return await _context.Shows
+                .Include(s => s.Movie)
+                .Where(s => s.MovieId == movieId)
+                .AsNoTracking()
+                .ToListAsync(); // Note the await here
+        }
+
+        public async Task<IEnumerable<Show>> GetShowsByDateAsync(DateOnly date)
+        {
+            return await _context.Shows
+                .Where(s => s.ShowDate == date)
+                .ToListAsync();
+        }
 
         public async Task<IEnumerable<Show>> GetShowsByMovieIdAsync(int movieId)
         {
@@ -50,7 +66,7 @@ namespace MovieBuzz.Repository.Repositories
 
         public async Task<Show> UpdateShowAsync(Show show)
         {
-            _context.Shows.Update(show);
+             _context.Shows.Update(show);
             return show;
         }
     }
