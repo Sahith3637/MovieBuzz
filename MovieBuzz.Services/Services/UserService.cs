@@ -79,10 +79,41 @@ namespace MovieBuzz.Services.Services
             return _mapper.Map<UserResponseDto>(user);
         }
 
+        //public async Task<UserResponseDto> LoginUserAsync(LoginDto loginDto)
+        //{
+        //    var user = await _unitOfWork.Users.GetUserByUsernameAsync(loginDto.UserName)
+        //        ?? throw MovieBuzzExceptions.Unauthorized("Invalid username or password");
+
+        //    // Check if user is too old (born before 1930) or too young (under 3)
+        //    var today = DateOnly.FromDateTime(DateTime.Today);
+        //    var age = today.Year - user.DateOfBirth.Year;
+        //    if (user.DateOfBirth > today.AddYears(-age)) age--;
+
+        //    if (age < 3)
+        //        throw MovieBuzzExceptions.Unauthorized("User must be at least 3 years old");
+
+        //    if (age > 93) // 2023 - 1930 = 93
+        //        throw MovieBuzzExceptions.Unauthorized("User account is too old");
+
+        //    // Verify password
+        //    if (!PasswordHasher.VerifyPassword(loginDto.Password, user.Password))
+        //        throw MovieBuzzExceptions.Unauthorized("Invalid username or password");
+
+        //    return _mapper.Map<UserResponseDto>(user);
+        //}
+
+
+
         public async Task<UserResponseDto> LoginUserAsync(LoginDto loginDto)
         {
-            var user = await _unitOfWork.Users.GetUserByUsernameAsync(loginDto.UserName)
-                ?? throw MovieBuzzExceptions.Unauthorized("Invalid username or password");
+            // Get user by exact username match (case-sensitive)
+            var user = await _unitOfWork.Users.GetUserByUsernameAsync(loginDto.UserName);
+
+            // If no user found or username doesn't match exactly (case-sensitive)
+            if (user == null || user.UserName != loginDto.UserName)
+            {
+                throw MovieBuzzExceptions.Unauthorized("Invalid username or password");
+            }
 
             // Check if user is too old (born before 1930) or too young (under 3)
             var today = DateOnly.FromDateTime(DateTime.Today);

@@ -25,12 +25,21 @@ namespace MovieBuzz.API.Controllers
                 return CreatedAtAction(
                     nameof(GetBookingById),
                     new { bookingId = booking.BookingId },
-                    booking
+                    new
+                    {
+                        Success = true,
+                        Data = booking,
+                        Message = "Booking created successfully"
+                    }
                 );
             }
             catch (Exception ex) when (ex is BusinessRuleException || ex is NotFoundException)
             {
-                return BadRequest(new { Message = ex.Message });
+                return BadRequest(new
+                {
+                    Success = false,
+                    Message = ex.Message
+                });
             }
         }
 
@@ -40,35 +49,75 @@ namespace MovieBuzz.API.Controllers
             try
             {
                 var booking = await _bookingService.GetBookingByIdAsync(bookingId);
-                return Ok(booking);
+                return Ok(new
+                {
+                    Success = true,
+                    Data = booking,
+                    Message = "Booking retrieved successfully"
+                });
             }
-            catch (NotFoundException)
+            catch (NotFoundException ex)
             {
-                return NotFound();
+                return NotFound(new
+                {
+                    Success = false,
+                    Message = ex.Message
+                });
             }
         }
 
-        //[HttpGet("user/{userId}")]
-        //public async Task<IActionResult> GetBookingsByUser(int userId)
-        //{
-        //    var bookings = await _bookingService.GetBookingsByUserIdAsync(userId);
-        //    return Ok(bookings);
-        //}
-
         [HttpGet("admin")]
-        //[ApiExplorerSettings(GroupName = "Admin")]
         public async Task<IActionResult> GetAllBookings()
         {
-            var bookings = await _bookingService.GetAllBookingsAsync();
-            return Ok(bookings);
+            try
+            {
+                var bookings = await _bookingService.GetAllBookingsAsync();
+                return Ok(new
+                {
+                    Success = true,
+                    Data = bookings,
+                    Message = "All bookings retrieved successfully"
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
         }
 
         [HttpGet("admin/movie/{movieId}")]
-        //[ApiExplorerSettings(GroupName = "Admin")]
         public async Task<IActionResult> GetBookingsByMovie(int movieId)
         {
-            var bookings = await _bookingService.GetBookingsByMovieIdAsync(movieId);
-            return Ok(bookings);
+            try
+            {
+                var bookings = await _bookingService.GetBookingsByMovieIdAsync(movieId);
+                return Ok(new
+                {
+                    Success = true,
+                    Data = bookings,
+                    Message = $"Bookings for movie {movieId} retrieved successfully"
+                });
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new
+                {
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
         }
     }
 }

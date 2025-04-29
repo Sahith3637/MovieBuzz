@@ -9,9 +9,19 @@ using MovieBuzz.Services.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 
+//builder.Services.AddDbContext<AppDbContext>(options =>
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("MovieBuzzDB"),
+//    sqlOptions => sqlOptions.EnableRetryOnFailure()));
 builder.Services.AddDbContext<AppDbContext>(options =>
+{
     options.UseSqlServer(builder.Configuration.GetConnectionString("MovieBuzzDB"),
-    sqlOptions => sqlOptions.EnableRetryOnFailure()));
+        sqlOptions => sqlOptions.EnableRetryOnFailure());
+
+    // These methods belong to DbContextOptionsBuilder
+    options.EnableDetailedErrors();
+    options.EnableSensitiveDataLogging();
+    options.LogTo(Console.WriteLine, LogLevel.Information);
+});
 
 // Add services to the container
 builder.Services.AddAutoMapper(typeof(MappingProfile));
@@ -55,6 +65,19 @@ using (var scope = app.Services.CreateScope())
         Console.WriteLine($"An error occurred while initializing the database: {ex.Message}");
     }
 }
+//app.Use(async (context, next) =>
+//{
+//    try
+//    {
+//        await next();
+//    }
+//    catch (Exception ex)
+//    {
+//        Console.WriteLine($"Unhandled exception: {ex}");
+//        context.Response.StatusCode = 500;
+//        await context.Response.WriteAsync("An unexpected error occurred");
+//    }
+//});
 app.Use(async (context, next) =>
 {
     try
@@ -64,8 +87,13 @@ app.Use(async (context, next) =>
     catch (Exception ex)
     {
         Console.WriteLine($"Unhandled exception: {ex}");
+        Console.WriteLine($"Stack Trace: {ex.StackTrace}");
+        if (ex.InnerException != null)
+        {
+            Console.WriteLine($"Inner Exception: {ex.InnerException}");
+        }
         context.Response.StatusCode = 500;
-        await context.Response.WriteAsync("An unexpected error occurred");
+        await context.Response.WriteAsync($"An unexpected error occurred: {ex.Message}");
     }
 });
 app.MapGet("/testdb", async (AppDbContext dbContext) =>

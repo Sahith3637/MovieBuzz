@@ -12,8 +12,7 @@ namespace MovieBuzz.Core.Dtos.Shows
         [Required(ErrorMessage = "Movie ID is required")]
         public int MovieId { get; set; }
 
-        [Required(ErrorMessage = "Show time is required")]
-        [RegularExpression(@"^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$", ErrorMessage = "Show time must be in HH:MM format")]
+         
         public required string ShowTime { get; set; }
 
         [Required(ErrorMessage = "Show date is required")]

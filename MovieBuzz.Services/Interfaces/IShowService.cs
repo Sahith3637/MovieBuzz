@@ -12,7 +12,8 @@ namespace MovieBuzz.Services.Interfaces
     {
         Task<ShowResponseDto> GetShowByIdAsync(int showId);
         Task<IEnumerable<ShowResponseDto>> GetAllShowsAsync();
-        Task<IEnumerable<ShowResponseDto>> GetShowsByMovieIdAsync(int movieId);
+        //Task<IEnumerable<ShowResponseDto>> GetShowsByMovieIdAsync(int movieId);
+        Task<IEnumerable<ShowWithMovieDetailsDto>> GetShowsByMovieIdAsync(int movieId);
         Task<ShowResponseDto> AddShowAsync(CreateShowDto showDto);
         Task<ShowResponseDto> UpdateShowAsync(int showId, ShowDto showDto);
     }
