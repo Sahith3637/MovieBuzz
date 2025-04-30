@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Applications\\MovieBuzz\\BusinessLayer\\MovieBuzz\\MovieBuzz.Utils\\MovieBuzz.Utils.csproj": {}
+    "C:\\Applications\\MovieBuzz\\Replica\\MovieBuzz\\MovieBuzz.Utils\\MovieBuzz.Utils.csproj": {}
   },
   "projects": {
-    "C:\\Applications\\MovieBuzz\\BusinessLayer\\MovieBuzz\\MovieBuzz.Utils\\MovieBuzz.Utils.csproj": {
+    "C:\\Applications\\MovieBuzz\\Replica\\MovieBuzz\\MovieBuzz.Utils\\MovieBuzz.Utils.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Applications\\MovieBuzz\\BusinessLayer\\MovieBuzz\\MovieBuzz.Utils\\MovieBuzz.Utils.csproj",
+        "projectUniqueName": "C:\\Applications\\MovieBuzz\\Replica\\MovieBuzz\\MovieBuzz.Utils\\MovieBuzz.Utils.csproj",
         "projectName": "MovieBuzz.Utils",
-        "projectPath": "C:\\Applications\\MovieBuzz\\BusinessLayer\\MovieBuzz\\MovieBuzz.Utils\\MovieBuzz.Utils.csproj",
+        "projectPath": "C:\\Applications\\MovieBuzz\\Replica\\MovieBuzz\\MovieBuzz.Utils\\MovieBuzz.Utils.csproj",
         "packagesPath": "C:\\Users\\Sai Sahith Ajju\\.nuget\\packages\\",
-        "outputPath": "C:\\Applications\\MovieBuzz\\BusinessLayer\\MovieBuzz\\MovieBuzz.Utils\\obj\\",
+        "outputPath": "C:\\Applications\\MovieBuzz\\Replica\\MovieBuzz\\MovieBuzz.Utils\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -52,17 +52,17 @@ namespace MovieBuzz.Services.Services
 
         public async Task<UserResponseDto> RegisterUserAsync(RegisterUserDto registerUserDto)
         {
-            // Check username uniqueness
+           
             var existingUser = await _unitOfWork.Users.GetUserByUsernameAsync(registerUserDto.UserName);
             if (existingUser != null)
                 throw MovieBuzzExceptions.Conflict("Username already exists");
 
-            // Check phone number uniqueness
+            
             var existingPhoneUser = await _unitOfWork.Users.GetUserByPhoneAsync(registerUserDto.PhoneNo);
             if (existingPhoneUser != null)
                 throw MovieBuzzExceptions.Conflict("Phone number already registered");
 
-            // Check email uniqueness
+            
             var existingEmailUser = await _unitOfWork.Users.GetUserByEmailAsync(registerUserDto.EmailId);
             if (existingEmailUser != null)
                 throw MovieBuzzExceptions.Conflict("Email already registered");
@@ -106,10 +106,10 @@ namespace MovieBuzz.Services.Services
 
         public async Task<UserResponseDto> LoginUserAsync(LoginDto loginDto)
         {
-            // Get user by exact username match (case-sensitive)
+           
             var user = await _unitOfWork.Users.GetUserByUsernameAsync(loginDto.UserName);
 
-            // If no user found or username doesn't match exactly (case-sensitive)
+           
             if (user == null || user.UserName != loginDto.UserName)
             {
                 throw MovieBuzzExceptions.Unauthorized("Invalid username or password");

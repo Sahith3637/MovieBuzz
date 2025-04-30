@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using MovieBuzz.Core.Dtos.Movies;
+using MovieBuzz.Core.Dtos.Shows;
+using MovieBuzz.Core.DTOs.Shows;
 using MovieBuzz.Core.Entities;
 using MovieBuzz.Core.Exceptions;
 using MovieBuzz.Repository.Interfaces;
@@ -70,5 +72,86 @@ namespace MovieBuzz.Services.Services
             if (result) await _unitOfWork.CompleteAsync();
             return result;
         }
+
+        // added
+        public async Task<MovieWithShowsResponseDto> CreateMovieWithShowsAsync(MovieWithShowsDto dto)
+        {
+            // Create movie
+            var movie = _mapper.Map<Movie>(dto.Movie);
+            movie.IsActive = true;
+            await _unitOfWork.Movies.AddMovieAsync(movie);
+            await _unitOfWork.CompleteAsync();
+
+            // Create shows
+            var shows = new List<ShowResponseDto>();
+            foreach (var showDto in dto.Shows)
+            {
+                var show = _mapper.Map<Show>(new CreateShowDto
+                {
+                    MovieId = movie.MovieId,
+                    ShowTime = showDto.ShowTime,
+                    ShowDate = showDto.ShowDate,
+                    AvailableSeats = showDto.AvailableSeats
+                });
+
+                await _unitOfWork.Shows.AddShowAsync(show);
+                shows.Add(_mapper.Map<ShowResponseDto>(show));
+            }
+
+            await _unitOfWork.CompleteAsync();
+
+            return new MovieWithShowsResponseDto
+            {
+                Movie = _mapper.Map<MovieResponseDto>(movie),
+                Shows = shows
+            };
+        }
+
+        public async Task<MovieWithShowsResponseDto> UpdateMovieWithShowsAsync(int movieId, UpdateMovieWithShowsDto dto)
+        {
+            // Update movie
+            var movie = await _unitOfWork.Movies.GetMovieByIdAsync(movieId)
+                ?? throw MovieBuzzExceptions.NotFound($"Movie with ID {movieId} not found");
+
+            _mapper.Map(dto.Movie, movie);
+            await _unitOfWork.Movies.UpdateMovieAsync(movie);
+
+            // Process shows
+            var shows = new List<ShowResponseDto>();
+            foreach (var showDto in dto.Shows)
+            {
+                if (showDto.ShowId.HasValue) // Update existing
+                {
+                    var show = await _unitOfWork.Shows.GetShowByIdAsync(showDto.ShowId.Value)
+                        ?? throw MovieBuzzExceptions.NotFound($"Show with ID {showDto.ShowId} not found");
+
+                    _mapper.Map(showDto, show);
+                    await _unitOfWork.Shows.UpdateShowAsync(show);
+                    shows.Add(_mapper.Map<ShowResponseDto>(show));
+                }
+                else // Create new
+                {
+                    var show = _mapper.Map<Show>(new CreateShowDto
+                    {
+                        MovieId = movieId,
+                        ShowTime = showDto.ShowTime,
+                        ShowDate = showDto.ShowDate,
+                        AvailableSeats = showDto.AvailableSeats
+                    });
+
+                    await _unitOfWork.Shows.AddShowAsync(show);
+                    shows.Add(_mapper.Map<ShowResponseDto>(show));
+                }
+            }
+
+            await _unitOfWork.CompleteAsync();
+
+            return new MovieWithShowsResponseDto
+            {
+                Movie = _mapper.Map<MovieResponseDto>(movie),
+                Shows = shows
+            };
+        }
+
     }
 }

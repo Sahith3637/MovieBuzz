@@ -12,29 +12,29 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        // User Mappings
+        
         CreateUserMappings();
 
-        // Movie Mappings
+        
         CreateMovieMappings();
 
-        // Show Mappings
+        
         CreateShowMappings();
 
-        // Booking Mappings
+      
         CreateBookingMappings();
     }
 
     private void CreateUserMappings()
     {
-        // RegisterUserDto → User
+        
         CreateMap<RegisterUserDto, User>()
             .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password))
-            .ForMember(dest => dest.Role, opt => opt.MapFrom(_ => "User")) // Default role
+            .ForMember(dest => dest.Role, opt => opt.MapFrom(_ => "User")) 
             .ForMember(dest => dest.IsActive, opt => opt.MapFrom(_ => true))
             .ForMember(dest => dest.CreatedOn, opt => opt.MapFrom(_ => DateTime.UtcNow));
 
-        // User → UserResponseDto
+        
         CreateMap<User, UserResponseDto>()
             .ForMember(dest => dest.FullName,
                 opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"));
@@ -42,20 +42,20 @@ public class MappingProfile : Profile
 
     private void CreateMovieMappings()
     {
-        // CreateMovieDto → Movie
+       
         CreateMap<CreateMovieDto, Movie>()
             .ForMember(dest => dest.IsActive, opt => opt.MapFrom(_ => true))
             .ForMember(dest => dest.CreatedOn, opt => opt.MapFrom(_ => DateTime.UtcNow))
             .ForMember(dest => dest.UpdatedOn, opt => opt.MapFrom(_ => DateTime.UtcNow));
 
-        // MovieDto → Movie (for updates)
+        
         CreateMap<MovieDto, Movie>()
             .ForMember(dest => dest.UpdatedOn, opt => opt.MapFrom(_ => DateTime.UtcNow));
 
-        // Movie → MovieResponseDto
+       
         CreateMap<Movie, MovieResponseDto>();
 
-        // Movie → MovieSummaryDto
+        
         CreateMap<Movie, MovieSummaryDto>();
     }
 

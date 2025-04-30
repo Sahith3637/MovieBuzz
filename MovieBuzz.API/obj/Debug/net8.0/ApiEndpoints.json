@@ -58,6 +58,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "MovieBuzz.API.Controllers.BookingsController",
+    "Method": "GetBookingsByUser",
+    "RelativePath": "Bookings/user/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "MovieBuzz.API.Controllers.MoviesController",
     "Method": "GetAllMovies",
     "RelativePath": "Movies",
@@ -144,6 +160,43 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MovieBuzz.API.Controllers.MoviesController",
+    "Method": "CreateMovieWithShows",
+    "RelativePath": "Movies/with-shows",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "MovieBuzz.Core.Dtos.Movies.MovieWithShowsDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MovieBuzz.API.Controllers.MoviesController",
+    "Method": "UpdateMovieWithShows",
+    "RelativePath": "Movies/with-shows/{movieId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "movieId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "MovieBuzz.Core.Dtos.Movies.UpdateMovieWithShowsDto",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -237,7 +290,7 @@
   },
   {
     "ContainingType": "Program\u002B\u003C\u003Ec",
-    "Method": "\u003C\u003CMain\u003E$\u003Eb__0_2",
+    "Method": "\u003C\u003CMain\u003E$\u003Eb__0_3",
     "RelativePath": "testdb",
     "HttpMethod": "GET",
     "IsController": false,
