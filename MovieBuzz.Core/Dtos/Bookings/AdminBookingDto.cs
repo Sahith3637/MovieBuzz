@@ -15,6 +15,6 @@ namespace MovieBuzz.Core.Dtos.Bookings
         public string ShowTime { get; set; } = null!;
         public DateOnly ShowDate { get; set; }
         public decimal TotalPrice { get; set; }
-        public DateTime BookingDate { get; set; }
+        //public DateTime BookingDate { get; set; }
     }
 }

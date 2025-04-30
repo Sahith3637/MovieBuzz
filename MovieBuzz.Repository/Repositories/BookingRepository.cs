@@ -145,6 +145,7 @@ namespace MovieBuzz.Repository.Repositories
             return await _context.Bookings
                 .Where(b => b.MovieId == movieId)
                 .Include(b => b.User)
+                .Include(b => b.Movie)
                 .Include(b => b.Show)
                 .ToListAsync(); // Removed ordering
         }

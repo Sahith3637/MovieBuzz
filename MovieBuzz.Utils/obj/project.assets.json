@@ -4727,11 +4727,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Applications\\MovieBuzz\\Back_End\\MovieBuzz\\MovieBuzz.Utils\\MovieBuzz.Utils.csproj",
+      "projectUniqueName": "C:\\Applications\\MovieBuzz\\BusinessLayer\\MovieBuzz\\MovieBuzz.Utils\\MovieBuzz.Utils.csproj",
       "projectName": "MovieBuzz.Utils",
-      "projectPath": "C:\\Applications\\MovieBuzz\\Back_End\\MovieBuzz\\MovieBuzz.Utils\\MovieBuzz.Utils.csproj",
+      "projectPath": "C:\\Applications\\MovieBuzz\\BusinessLayer\\MovieBuzz\\MovieBuzz.Utils\\MovieBuzz.Utils.csproj",
       "packagesPath": "C:\\Users\\Sai Sahith Ajju\\.nuget\\packages\\",
-      "outputPath": "C:\\Applications\\MovieBuzz\\Back_End\\MovieBuzz\\MovieBuzz.Utils\\obj\\",
+      "outputPath": "C:\\Applications\\MovieBuzz\\BusinessLayer\\MovieBuzz\\MovieBuzz.Utils\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

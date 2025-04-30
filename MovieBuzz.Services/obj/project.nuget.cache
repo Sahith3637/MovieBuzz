@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "qJbPO4lweYQ=",
+  "dgSpecHash": "3NhdaAlikwY=",
   "success": true,
-  "projectFilePath": "C:\\Applications\\MovieBuzz\\Back_End\\MovieBuzz\\MovieBuzz.Services\\MovieBuzz.Services.csproj",
+  "projectFilePath": "C:\\Applications\\MovieBuzz\\BusinessLayer\\MovieBuzz\\MovieBuzz.Services\\MovieBuzz.Services.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Sai Sahith Ajju\\.nuget\\packages\\automapper\\14.0.0\\automapper.14.0.0.nupkg.sha512",
     "C:\\Users\\Sai Sahith Ajju\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
