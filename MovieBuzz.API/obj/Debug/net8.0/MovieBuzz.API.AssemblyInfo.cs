@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MovieBuzz.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3b68635572847f861aff03a21faf1963e12754db")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+95442377ea3164b8626a316f0a3b6c1349a01abf")]
 [assembly: System.Reflection.AssemblyProductAttribute("MovieBuzz.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MovieBuzz.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
