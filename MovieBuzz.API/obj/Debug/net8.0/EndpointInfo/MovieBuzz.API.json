@@ -71,6 +71,29 @@
         }
       }
     },
+    "/Bookings/user/{userId}": {
+      "get": {
+        "tags": [
+          "Bookings"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/Bookings/admin/movie/{movieId}": {
       "get": {
         "tags": [
@@ -245,6 +268,79 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Movies/with-shows": {
+      "post": {
+        "tags": [
+          "Movies"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MovieWithShowsDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MovieWithShowsDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MovieWithShowsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Movies/with-shows/{movieId}": {
+      "put": {
+        "tags": [
+          "Movies"
+        ],
+        "parameters": [
+          {
+            "name": "movieId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMovieWithShowsDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMovieWithShowsDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMovieWithShowsDto"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -725,6 +821,22 @@
         },
         "additionalProperties": false
       },
+      "MovieWithShowsDto": {
+        "type": "object",
+        "properties": {
+          "movie": {
+            "$ref": "#/components/schemas/CreateMovieDto"
+          },
+          "shows": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ShowCreationDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "RegisterUserDto": {
         "required": [
           "dateOfBirth",
@@ -775,6 +887,32 @@
         },
         "additionalProperties": false
       },
+      "ShowCreationDto": {
+        "required": [
+          "availableSeats",
+          "showDate",
+          "showTime"
+        ],
+        "type": "object",
+        "properties": {
+          "showTime": {
+            "minLength": 1,
+            "pattern": "^(1[0-2]|0?[1-9]):[0-5][0-9] (AM|PM)$",
+            "type": "string"
+          },
+          "showDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "availableSeats": {
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "ShowDto": {
         "required": [
           "availableSeats",
@@ -805,6 +943,61 @@
           "isHouseFull": {
             "type": "boolean",
             "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateMovieWithShowsDto": {
+        "type": "object",
+        "properties": {
+          "movie": {
+            "$ref": "#/components/schemas/MovieDto"
+          },
+          "shows": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UpdateShowDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateShowDto": {
+        "required": [
+          "availableSeats",
+          "movieId",
+          "showDate",
+          "showTime"
+        ],
+        "type": "object",
+        "properties": {
+          "movieId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "showTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "showDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "availableSeats": {
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "isHouseFull": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "showId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false

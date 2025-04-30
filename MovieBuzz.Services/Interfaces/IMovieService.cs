@@ -15,5 +15,8 @@ namespace MovieBuzz.Services.Interfaces
         Task<MovieResponseDto> AddMovieAsync(CreateMovieDto movieDto);
         Task<MovieResponseDto> UpdateMovieAsync(int movieId, MovieDto movieDto);
         Task<bool> ToggleMovieStatusAsync(int movieId);
+
+        Task<MovieWithShowsResponseDto> CreateMovieWithShowsAsync(MovieWithShowsDto dto);
+        Task<MovieWithShowsResponseDto> UpdateMovieWithShowsAsync(int movieId, UpdateMovieWithShowsDto dto);
     }
 }

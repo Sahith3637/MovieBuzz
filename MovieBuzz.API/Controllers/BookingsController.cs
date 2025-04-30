@@ -89,6 +89,37 @@ namespace MovieBuzz.API.Controllers
             }
         }
 
+        [HttpGet("user/{userId}")]
+        public async Task<IActionResult> GetBookingsByUser(int userId)
+        {
+            try
+            {
+                var bookings = await _bookingService.GetBookingsByUserIdAsync(userId);
+                return Ok(new
+                {
+                    Success = true,
+                    Data = bookings,
+                    Message = $"Bookings for user {userId} retrieved successfully"
+                });
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new
+                {
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+        }
+
         [HttpGet("admin/movie/{movieId}")]
         public async Task<IActionResult> GetBookingsByMovie(int movieId)
         {

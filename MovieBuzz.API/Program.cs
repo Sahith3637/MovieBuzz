@@ -23,7 +23,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.LogTo(Console.WriteLine, LogLevel.Information);
 });
 
-// Add services to the container
+
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddControllers();
 
@@ -33,7 +33,7 @@ builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 builder.Services.AddScoped<IShowRepository, ShowRepository>();
 builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 
-// Service Layer
+
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<IShowService, ShowService>();
@@ -47,10 +47,17 @@ builder.Services.AddScoped<TestSeederService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Repository Layer
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("*",
+        policy => policy.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod());
+});
 
 
 var app = builder.Build();
+app.UseCors("*");
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -65,19 +72,7 @@ using (var scope = app.Services.CreateScope())
         Console.WriteLine($"An error occurred while initializing the database: {ex.Message}");
     }
 }
-//app.Use(async (context, next) =>
-//{
-//    try
-//    {
-//        await next();
-//    }
-//    catch (Exception ex)
-//    {
-//        Console.WriteLine($"Unhandled exception: {ex}");
-//        context.Response.StatusCode = 500;
-//        await context.Response.WriteAsync("An unexpected error occurred");
-//    }
-//});
+
 app.Use(async (context, next) =>
 {
     try
