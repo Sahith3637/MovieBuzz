@@ -50,3 +50,16 @@ C:\Applications\MovieBuzz\Replica\MovieBuzz\MovieBuzz.Core\obj\Debug\net8.0\Movi
 C:\Applications\MovieBuzz\Replica\MovieBuzz\MovieBuzz.Core\obj\Debug\net8.0\refint\MovieBuzz.Core.dll
 C:\Applications\MovieBuzz\Replica\MovieBuzz\MovieBuzz.Core\obj\Debug\net8.0\MovieBuzz.Core.pdb
 C:\Applications\MovieBuzz\Replica\MovieBuzz\MovieBuzz.Core\obj\Debug\net8.0\ref\MovieBuzz.Core.dll
+C:\Applications\MovieBuzz\BackEnd\MovieBuzz\MovieBuzz.Core\bin\Debug\net8.0\MovieBuzz.Core.deps.json
+C:\Applications\MovieBuzz\BackEnd\MovieBuzz\MovieBuzz.Core\bin\Debug\net8.0\MovieBuzz.Core.dll
+C:\Applications\MovieBuzz\BackEnd\MovieBuzz\MovieBuzz.Core\bin\Debug\net8.0\MovieBuzz.Core.pdb
+C:\Applications\MovieBuzz\BackEnd\MovieBuzz\MovieBuzz.Core\obj\Debug\net8.0\MovieBuzz.Core.csproj.AssemblyReference.cache
+C:\Applications\MovieBuzz\BackEnd\MovieBuzz\MovieBuzz.Core\obj\Debug\net8.0\MovieBuzz.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Applications\MovieBuzz\BackEnd\MovieBuzz\MovieBuzz.Core\obj\Debug\net8.0\MovieBuzz.Core.AssemblyInfoInputs.cache
+C:\Applications\MovieBuzz\BackEnd\MovieBuzz\MovieBuzz.Core\obj\Debug\net8.0\MovieBuzz.Core.AssemblyInfo.cs
+C:\Applications\MovieBuzz\BackEnd\MovieBuzz\MovieBuzz.Core\obj\Debug\net8.0\MovieBuzz.Core.csproj.CoreCompileInputs.cache
+C:\Applications\MovieBuzz\BackEnd\MovieBuzz\MovieBuzz.Core\obj\Debug\net8.0\MovieBuzz.Core.sourcelink.json
+C:\Applications\MovieBuzz\BackEnd\MovieBuzz\MovieBuzz.Core\obj\Debug\net8.0\MovieBuzz.Core.dll
+C:\Applications\MovieBuzz\BackEnd\MovieBuzz\MovieBuzz.Core\obj\Debug\net8.0\refint\MovieBuzz.Core.dll
+C:\Applications\MovieBuzz\BackEnd\MovieBuzz\MovieBuzz.Core\obj\Debug\net8.0\MovieBuzz.Core.pdb
+C:\Applications\MovieBuzz\BackEnd\MovieBuzz\MovieBuzz.Core\obj\Debug\net8.0\ref\MovieBuzz.Core.dll

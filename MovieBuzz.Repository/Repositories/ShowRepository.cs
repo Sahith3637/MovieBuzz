@@ -17,7 +17,7 @@ namespace MovieBuzz.Repository.Repositories
         public ShowRepository(AppDbContext context)
         {
             _context = context;
-        }   
+        }
         public async Task<Show?> GetShowByIdAsync(int showId)
         {
             return await _context.Shows.FindAsync(showId);
@@ -44,6 +44,8 @@ namespace MovieBuzz.Repository.Repositories
                 .ToListAsync(); // Note the await here
         }
 
+
+
         public async Task<IEnumerable<Show>> GetShowsByDateAsync(DateOnly date)
         {
             return await _context.Shows
@@ -66,7 +68,7 @@ namespace MovieBuzz.Repository.Repositories
 
         public async Task<Show> UpdateShowAsync(Show show)
         {
-             _context.Shows.Update(show);
+            _context.Shows.Update(show);
             return show;
         }
     }

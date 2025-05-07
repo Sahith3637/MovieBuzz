@@ -16,11 +16,13 @@ namespace MovieBuzz.Services.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IShowService _showService;
 
-        public MovieService(IUnitOfWork unitOfWork, IMapper mapper)
+        public MovieService(IUnitOfWork unitOfWork, IMapper mapper, IShowService showService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _showService = showService;
         }
 
         public async Task<MovieResponseDto> GetMovieByIdAsync(int movieId)
@@ -74,15 +76,84 @@ namespace MovieBuzz.Services.Services
         }
 
         // added
+        //public async Task<MovieWithShowsResponseDto> CreateMovieWithShowsAsync(MovieWithShowsDto dto)
+        //{
+        //    // Create movie
+        //    var movie = _mapper.Map<Movie>(dto.Movie);
+        //    movie.IsActive = true;
+        //    await _unitOfWork.Movies.AddMovieAsync(movie);
+        //    await _unitOfWork.CompleteAsync();
+
+        //    // Create shows
+        //    var shows = new List<ShowResponseDto>();
+        //    foreach (var showDto in dto.Shows)
+        //    {
+        //        var show = _mapper.Map<Show>(new CreateShowDto
+        //        {
+        //            MovieId = movie.MovieId,
+        //            ShowTime = showDto.ShowTime,
+        //            ShowDate = showDto.ShowDate,
+        //            AvailableSeats = showDto.AvailableSeats
+        //        });
+
+        //        await _unitOfWork.Shows.AddShowAsync(show);
+        //        shows.Add(_mapper.Map<ShowResponseDto>(show));
+        //    }
+
+        //    await _unitOfWork.CompleteAsync();
+
+        //    return new MovieWithShowsResponseDto
+        //    {
+        //        Movie = _mapper.Map<MovieResponseDto>(movie),
+        //        Shows = shows
+        //    };
+        //}
+
         public async Task<MovieWithShowsResponseDto> CreateMovieWithShowsAsync(MovieWithShowsDto dto)
         {
-            // Create movie
+            // Validate all show times first (before creating anything)
+            foreach (var showDto in dto.Shows)
+            {
+                if (!DateTime.TryParse(showDto.ShowTime, out var showTime))
+                {
+                    throw MovieBuzzExceptions.BusinessRule("Invalid show time format");
+                }
+                var timeSpan = showTime.TimeOfDay;
+
+                var existingShowsSameTime = await _unitOfWork.Shows.GetShowsByDateAsync(showDto.ShowDate);
+                if (existingShowsSameTime.Any(s =>
+                {
+                    if (!DateTime.TryParse(s.ShowTime, out var existingShowTime))
+                        return false;
+                    return existingShowTime.TimeOfDay == timeSpan;
+                }))
+                {
+                    throw MovieBuzzExceptions.Conflict($"A show already exists at {showDto.ShowTime} on {showDto.ShowDate}");
+                }
+
+                foreach (var existingShow in existingShowsSameTime)
+                {
+                    if (!DateTime.TryParse(existingShow.ShowTime, out var existingShowTime))
+                        continue;
+
+                    var existingTimeSpan = existingShowTime.TimeOfDay;
+                    var timeDifference = Math.Abs((timeSpan - existingTimeSpan).TotalMinutes);
+
+                    if (timeDifference < 200)
+                    {
+                        throw MovieBuzzExceptions.BusinessRule(
+                            $"There must be at least 200 minutes between shows. Conflict with show at {existingShow.ShowTime}");
+                    }
+                }
+            }
+
+            // Only create movie if all shows are valid
             var movie = _mapper.Map<Movie>(dto.Movie);
             movie.IsActive = true;
             await _unitOfWork.Movies.AddMovieAsync(movie);
-            await _unitOfWork.CompleteAsync();
+            await _unitOfWork.CompleteAsync(); // Save to get the ID
 
-            // Create shows
+            // Create shows (we know they're valid at this point)
             var shows = new List<ShowResponseDto>();
             foreach (var showDto in dto.Shows)
             {
@@ -107,20 +178,65 @@ namespace MovieBuzz.Services.Services
             };
         }
 
+
+
         public async Task<MovieWithShowsResponseDto> UpdateMovieWithShowsAsync(int movieId, UpdateMovieWithShowsDto dto)
         {
-            // Update movie
+            // Validate all show times first (before updating anything)
+            foreach (var showDto in dto.Shows)
+            {
+                if (!DateTime.TryParse(showDto.ShowTime, out var showTime))
+                {
+                    throw MovieBuzzExceptions.BusinessRule("Invalid show time format");
+                }
+                var timeSpan = showTime.TimeOfDay;
+
+                // Get existing shows, excluding the current show if it's an update
+                var existingShowsSameTime = (await _unitOfWork.Shows.GetShowsByDateAsync(showDto.ShowDate))
+                    .Where(s => !showDto.ShowId.HasValue || s.ShowId != showDto.ShowId.Value)
+                    .ToList();
+
+                // Check for exact time conflicts
+                if (existingShowsSameTime.Any(s =>
+                {
+                    if (!DateTime.TryParse(s.ShowTime, out var existingShowTime))
+                        return false;
+                    return existingShowTime.TimeOfDay == timeSpan;
+                }))
+                {
+                    throw MovieBuzzExceptions.Conflict($"A show already exists at {showDto.ShowTime} on {showDto.ShowDate}");
+                }
+
+                // Check 300-minute gap rule
+                foreach (var existingShow in existingShowsSameTime)
+                {
+                    if (!DateTime.TryParse(existingShow.ShowTime, out var existingShowTime))
+                        continue;
+
+                    var existingTimeSpan = existingShowTime.TimeOfDay;
+                    var timeDifference = Math.Abs((timeSpan - existingTimeSpan).TotalMinutes);
+
+                    if (timeDifference < 200)
+                    {
+                        throw MovieBuzzExceptions.BusinessRule(
+                            $"There must be at least 200 minutes between shows. Conflict with show at {existingShow.ShowTime}");
+                    }
+                }
+            }
+
+            // Only proceed with updates if all shows are valid
             var movie = await _unitOfWork.Movies.GetMovieByIdAsync(movieId)
                 ?? throw MovieBuzzExceptions.NotFound($"Movie with ID {movieId} not found");
 
+            // Update movie
             _mapper.Map(dto.Movie, movie);
             await _unitOfWork.Movies.UpdateMovieAsync(movie);
 
-            // Process shows
+            // Process shows (we know they're valid at this point)
             var shows = new List<ShowResponseDto>();
             foreach (var showDto in dto.Shows)
             {
-                if (showDto.ShowId.HasValue) // Update existing
+                if (showDto.ShowId.HasValue) // Update existing show
                 {
                     var show = await _unitOfWork.Shows.GetShowByIdAsync(showDto.ShowId.Value)
                         ?? throw MovieBuzzExceptions.NotFound($"Show with ID {showDto.ShowId} not found");
@@ -129,7 +245,7 @@ namespace MovieBuzz.Services.Services
                     await _unitOfWork.Shows.UpdateShowAsync(show);
                     shows.Add(_mapper.Map<ShowResponseDto>(show));
                 }
-                else // Create new
+                else // Create new show
                 {
                     var show = _mapper.Map<Show>(new CreateShowDto
                     {

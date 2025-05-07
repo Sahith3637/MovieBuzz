@@ -22,13 +22,13 @@ namespace MovieBuzz.Core.Dtos.Movies
         public required int AgeRestriction { get; set; }
 
         [Required(ErrorMessage = "Duration is required")]
-        [Range(1, 300, ErrorMessage = "Duration must be between 1 and 300 minutes")]
+        [Range(60, 200, ErrorMessage = "Duration must be between 60 and 200 minutes")]
         public required int Duration { get; set; }
 
         public required string Description { get; set; }
 
         [Required(ErrorMessage = "Price is required")]
-        [Range(0.01, 1000, ErrorMessage = "Price must be between 0.01 and 1000")]
+        [Range(0, 1000, ErrorMessage = "Price must be between 0.01 and 1000")]
         public decimal Price { get; set; }
 
         [Url(ErrorMessage = "Invalid URL format")]

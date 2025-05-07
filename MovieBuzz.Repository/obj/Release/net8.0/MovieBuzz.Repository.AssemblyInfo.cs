@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MovieBuzz.Repository")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+95442377ea3164b8626a316f0a3b6c1349a01abf")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5af143e0541388d5f45de08fe4d0f270850fc825")]
 [assembly: System.Reflection.AssemblyProductAttribute("MovieBuzz.Repository")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MovieBuzz.Repository")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
