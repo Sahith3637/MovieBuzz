@@ -81,12 +81,12 @@ namespace MovieBuzz.Repository.Repositories
             }
 
             // Parse show time and date
-            var showDateTime = show.ShowDate.ToDateTime(TimeOnly.Parse(show.ShowTime));
+            //var showDateTime = show.ShowDate.ToDateTime(TimeOnly.Parse(show.ShowTime));
 
-            if (showDateTime < DateTime.Now)
-            {
-                throw MovieBuzzExceptions.BusinessRule("Cannot book for past shows");
-            }
+            //if (showDateTime < DateTime.Now)
+            //{
+            //    throw MovieBuzzExceptions.BusinessRule("Cannot book for past shows");
+            //}
 
             // Get user
             var user = await _context.Users.FindAsync(booking.UserId);

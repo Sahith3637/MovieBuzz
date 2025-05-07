@@ -123,7 +123,7 @@ namespace MovieBuzz.Services.Services
             if (age < 3)
                 throw MovieBuzzExceptions.Unauthorized("User must be at least 3 years old");
 
-            if (age > 93) // 2023 - 1930 = 93
+            if (age > 95) // 2025 - 1930 = 95
                 throw MovieBuzzExceptions.Unauthorized("User account is too old");
 
             // Verify password

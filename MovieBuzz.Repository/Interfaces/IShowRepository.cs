@@ -14,7 +14,9 @@ namespace MovieBuzz.Repository.Interfaces
         Task<IEnumerable<Show>> GetAllShowsAsync();
         Task<IEnumerable<Show>> GetShowsByMovieIdAsync(int movieId);
         Task<IEnumerable<Show>> GetShowsWithMovieDetailsByMovieIdAsync(int movieId);
+        Task<IEnumerable<Show>> GetShowsByDateAsync(DateOnly date);
         Task<Show> AddShowAsync(Show show);
         Task<Show> UpdateShowAsync(Show show);
+        
     }
 }
