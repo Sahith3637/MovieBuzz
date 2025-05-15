@@ -9,7 +9,6 @@ namespace MovieBuzz.Repository.Repositories
     public class BookingRepository : IBookingRepository
     {
         private readonly AppDbContext _context;
-        private const string DateTimeFormat = "dd/MM/yyyy HH:mm";
 
         public BookingRepository(AppDbContext context) => _context = context;
 
@@ -69,47 +68,56 @@ namespace MovieBuzz.Repository.Repositories
         //    return booking;
         //}
 
+        //public async Task<Booking> AddBookingAsync(Booking booking)
+        //{
+        //    var show = await _context.Shows
+        //        .Include(s => s.Movie) // Add this to include Movie information
+        //        .FirstOrDefaultAsync(s => s.ShowId == booking.ShowId);
+
+        //    if (show == null)
+        //    {
+        //        throw MovieBuzzExceptions.NotFound("Show not found");
+        //    }
+
+        //    // Parse show time and date
+        //    //var showDateTime = show.ShowDate.ToDateTime(TimeOnly.Parse(show.ShowTime));
+
+        //    //if (showDateTime < DateTime.Now)
+        //    //{
+        //    //    throw MovieBuzzExceptions.BusinessRule("Cannot book for past shows");
+        //    //}
+
+        //    // Get user
+        //    var user = await _context.Users.FindAsync(booking.UserId);
+
+        //    if (user == null)
+        //    {
+        //        throw MovieBuzzExceptions.NotFound("User not found");
+        //    }
+
+        //    // Age validation
+        //    var today = DateOnly.FromDateTime(DateTime.Today);
+        //    var age = today.Year - user.DateOfBirth.Year;
+
+        //    if (user.DateOfBirth > today.AddYears(-age))
+        //    {
+        //        age--;
+        //    }
+
+        //    if (age < show.Movie.AgeRestriction)
+        //    {
+        //        throw MovieBuzzExceptions.BusinessRule($"User must be at least {show.Movie.AgeRestriction} years old to book this movie");
+        //    }
+
+        //    await _context.Bookings.AddAsync(booking);
+        //    return booking;
+        //}
+
         public async Task<Booking> AddBookingAsync(Booking booking)
         {
             var show = await _context.Shows
-                .Include(s => s.Movie) // Add this to include Movie information
+                .Include(s => s.Movie)
                 .FirstOrDefaultAsync(s => s.ShowId == booking.ShowId);
-
-            if (show == null)
-            {
-                throw MovieBuzzExceptions.NotFound("Show not found");
-            }
-
-            // Parse show time and date
-            //var showDateTime = show.ShowDate.ToDateTime(TimeOnly.Parse(show.ShowTime));
-
-            //if (showDateTime < DateTime.Now)
-            //{
-            //    throw MovieBuzzExceptions.BusinessRule("Cannot book for past shows");
-            //}
-
-            // Get user
-            var user = await _context.Users.FindAsync(booking.UserId);
-
-            if (user == null)
-            {
-                throw MovieBuzzExceptions.NotFound("User not found");
-            }
-
-            // Age validation
-            var today = DateOnly.FromDateTime(DateTime.Today);
-            var age = today.Year - user.DateOfBirth.Year;
-
-            if (user.DateOfBirth > today.AddYears(-age))
-            {
-                age--;
-            }
-
-            if (age < show.Movie.AgeRestriction)
-            {
-                throw MovieBuzzExceptions.BusinessRule($"User must be at least {show.Movie.AgeRestriction} years old to book this movie");
-            }
-
             await _context.Bookings.AddAsync(booking);
             return booking;
         }

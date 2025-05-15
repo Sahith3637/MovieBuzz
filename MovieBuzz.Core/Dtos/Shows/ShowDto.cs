@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MovieBuzz.Core.DTOs.Shows;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace MovieBuzz.Core.Dtos.Shows
         public required string ShowTime { get; set; }
 
         [Required(ErrorMessage = "Show date is required")]
+        [WithinThirtyDays(ErrorMessage = "Show date cannot be more than 30 days from today")]
         public required DateOnly ShowDate { get; set; }
 
         [Required(ErrorMessage = "Available seats is required")]

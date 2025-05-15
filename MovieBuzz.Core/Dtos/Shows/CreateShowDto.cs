@@ -15,7 +15,7 @@ public class CreateShowDto
 
     [Required]
     [NoPastDate]
-    [WithinFourDays(ErrorMessage = "Show date cannot be more than 4 days from today")]
+    [WithinThirtyDays(ErrorMessage = "Show date cannot be more than 30 days from today")]
     public DateOnly ShowDate { get; set; }
 
     [Required]
@@ -35,13 +35,13 @@ public class NoPastDateAttribute : ValidationAttribute
     }
 }
 
-public class WithinFourDaysAttribute : ValidationAttribute
+public class WithinThirtyDaysAttribute : ValidationAttribute
 {
     public override bool IsValid(object? value)
     {
         if (value is DateOnly date)
         {
-            var maxDate = DateOnly.FromDateTime(DateTime.Today.AddDays(4));
+            var maxDate = DateOnly.FromDateTime(DateTime.Today.AddDays(30));
             return date <= maxDate;
         }
         return false;

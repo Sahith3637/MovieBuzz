@@ -182,13 +182,22 @@ namespace MovieBuzz.Services.Services
 
         public async Task<MovieWithShowsResponseDto> UpdateMovieWithShowsAsync(int movieId, UpdateMovieWithShowsDto dto)
         {
+            var movie = await _unitOfWork.Movies.GetMovieByIdAsync(movieId)
+                ?? throw MovieBuzzExceptions.NotFound($"Movie with ID {movieId} not found");
+            if (!movie.IsActive)
+            {
+                throw MovieBuzzExceptions.BusinessRule("Cannot update shows for an inactive movie");
+            }
             // Validate all show times first (before updating anything)
             foreach (var showDto in dto.Shows)
             {
                 if (!DateTime.TryParse(showDto.ShowTime, out var showTime))
                 {
-                    throw MovieBuzzExceptions.BusinessRule("Invalid show time format");
+                    throw MovieBuzzExceptions.BusinessRule("Cannot add shows for past date");
                 }
+                
+
+                
                 var timeSpan = showTime.TimeOfDay;
 
                 // Get existing shows, excluding the current show if it's an update
@@ -225,8 +234,8 @@ namespace MovieBuzz.Services.Services
             }
 
             // Only proceed with updates if all shows are valid
-            var movie = await _unitOfWork.Movies.GetMovieByIdAsync(movieId)
-                ?? throw MovieBuzzExceptions.NotFound($"Movie with ID {movieId} not found");
+            //var movie = await _unitOfWork.Movies.GetMovieByIdAsync(movieId)
+            //    ?? throw MovieBuzzExceptions.NotFound($"Movie with ID {movieId} not found");
 
             // Update movie
             _mapper.Map(dto.Movie, movie);

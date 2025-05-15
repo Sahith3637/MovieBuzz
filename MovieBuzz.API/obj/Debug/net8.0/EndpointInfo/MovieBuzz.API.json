@@ -686,8 +686,8 @@
             "format": "int32"
           },
           "duration": {
-            "maximum": 300,
-            "minimum": 1,
+            "maximum": 200,
+            "minimum": 60,
             "type": "integer",
             "format": "int32"
           },
@@ -697,7 +697,7 @@
           },
           "price": {
             "maximum": 1000,
-            "minimum": 0.01,
+            "minimum": 0,
             "type": "number",
             "format": "double"
           },
@@ -793,8 +793,8 @@
             "format": "int32"
           },
           "duration": {
-            "maximum": 300,
-            "minimum": 1,
+            "maximum": 200,
+            "minimum": 60,
             "type": "integer",
             "format": "int32"
           },
@@ -804,7 +804,7 @@
           },
           "price": {
             "maximum": 1000,
-            "minimum": 0.01,
+            "minimum": 0,
             "type": "number",
             "format": "double"
           },
