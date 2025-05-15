@@ -15,6 +15,7 @@ namespace MovieBuzz.Core.Dtos.Movies
 
         [Required(ErrorMessage = "Genre is required")]
         [StringLength(50, ErrorMessage = "Genre cannot be longer than 50 characters")]
+        [validations.GenreValidation]
         public required string Genre { get; set; }
 
         [Required(ErrorMessage = "Age restriction is required")]

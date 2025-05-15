@@ -120,7 +120,7 @@ namespace MovieBuzz.Services.Services
             // Convert show time to TimeSpan
             if (!DateTime.TryParse(showDto.ShowTime, out var showTime))
             {
-                throw MovieBuzzExceptions.BusinessRule("Invalid show time format");
+                throw MovieBuzzExceptions.BusinessRule("Cannot add show for past date and time");
             }
             var newShowTimeSpan = showTime.TimeOfDay;
 
@@ -142,15 +142,15 @@ namespace MovieBuzz.Services.Services
             }
 
             // ❌ Conflict: More than 4 shows for this movie on the same date
-            var sameMovieSameDate = allShowsSameDate
-                .Where(s => s.MovieId == showDto.MovieId)
-                .ToList();
+            //var sameMovieSameDate = allShowsSameDate
+            //    .Where(s => s.MovieId == showDto.MovieId)
+            //    .ToList();
 
-            if (sameMovieSameDate.Count >= 4)
-            {
-                throw MovieBuzzExceptions.BusinessRule(
-                    "A maximum of 4 shows per day is allowed for a single movie.");
-            }
+            //if (sameMovieSameDate.Count >= 4)
+            //{
+            //    throw MovieBuzzExceptions.BusinessRule(
+            //        "A maximum of 4 shows per day is allowed for a single movie.");
+            //}
 
             // ❌ Conflict: Less than 180 minutes gap from any existing show on the same date
             foreach (var existingShow in allShowsSameDate)
@@ -162,7 +162,7 @@ namespace MovieBuzz.Services.Services
                 var gapInMinutes = Math.Abs((newShowTimeSpan - existingTimeSpan).TotalMinutes);
 
                 if (gapInMinutes < 180)
-                {
+                { 
                     throw MovieBuzzExceptions.BusinessRule(
                         $"There must be at least 180 minutes between shows. Conflict with show at {existingShow.ShowTime} for movie ID {existingShow.MovieId}");
                 }

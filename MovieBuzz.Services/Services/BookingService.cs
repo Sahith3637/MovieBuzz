@@ -29,6 +29,47 @@ namespace MovieBuzz.Services.Services
             return _mapper.Map<BookingResponseDto>(booking);
         }
 
+        //public async Task<BookingResponseDto> CreateBookingAsync(CreateBookingDto bookingDto)
+        //{
+        //    // Get show with movie information
+        //    var show = await _unitOfWork.Shows.GetShowWithMovieAsync(bookingDto.ShowId)
+        //        ?? throw MovieBuzzExceptions.NotFound("Show not found");
+
+        //    // Get user
+        //    var user = await _unitOfWork.Users.GetUserByIdAsync(bookingDto.UserId)
+        //        ?? throw MovieBuzzExceptions.NotFound("User not found");
+
+        //    // Validate seats
+        //    if (show.AvailableSeats < bookingDto.NumberOfTickets)
+        //    {
+        //        throw MovieBuzzExceptions.BusinessRule($"Only {show.AvailableSeats} seats available");
+        //    }
+
+        //    if (!show.Movie.IsActive)
+        //    {
+        //        throw MovieBuzzExceptions.BusinessRule("Cannot book tickets for an inactive movie");
+        //    }
+
+        //    // Create booking
+        //    var booking = new Booking
+        //    {
+        //        UserId = bookingDto.UserId,
+        //        ShowId = bookingDto.ShowId,
+        //        MovieId = show.MovieId,
+        //        NumberOfTickets = bookingDto.NumberOfTickets,
+        //        TotalPrice = bookingDto.NumberOfTickets * show.Movie.Price
+        //    };
+
+        //    // Update available seats
+        //    show.AvailableSeats -= bookingDto.NumberOfTickets;
+
+        //    await _unitOfWork.Bookings.AddBookingAsync(booking);
+        //    await _unitOfWork.Shows.UpdateShowAsync(show);
+        //    await _unitOfWork.CompleteAsync();
+
+        //    return _mapper.Map<BookingResponseDto>(booking);
+        //}
+
         public async Task<BookingResponseDto> CreateBookingAsync(CreateBookingDto bookingDto)
         {
             // Get show with movie information
@@ -38,6 +79,19 @@ namespace MovieBuzz.Services.Services
             // Get user
             var user = await _unitOfWork.Users.GetUserByIdAsync(bookingDto.UserId)
                 ?? throw MovieBuzzExceptions.NotFound("User not found");
+
+            var today = DateOnly.FromDateTime(DateTime.Today);
+            var age = today.Year - user.DateOfBirth.Year;
+
+            if (user.DateOfBirth > today.AddYears(-age))
+            {
+                age--;
+            }
+
+            if (age < show.Movie.AgeRestriction)
+            {
+                throw MovieBuzzExceptions.BusinessRule($"User must be at least {show.Movie.AgeRestriction} years old to book this movie");
+            }
 
             // Validate seats
             if (show.AvailableSeats < bookingDto.NumberOfTickets)

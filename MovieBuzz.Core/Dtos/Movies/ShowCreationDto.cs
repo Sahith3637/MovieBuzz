@@ -16,6 +16,7 @@ namespace MovieBuzz.Core.Dtos.Movies
 
         [Required]
         [NoPastDate]
+        [WithinThirtyDays(ErrorMessage = "Show date cannot be more than 30 days from today")]
         public DateOnly ShowDate { get; set; }
 
         [Required]
