@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "MovieBuzz.API",
-    "version": "1.0"
+    "title": "MovieBuzz API",
+    "version": "v1"
   },
   "paths": {
     "/Bookings": {
@@ -117,6 +117,23 @@
         }
       }
     },
+    "/api-stats": {
+      "get": {
+        "tags": [
+          "MovieBuzz.API"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { }
+              }
+            }
+          }
+        }
+      }
+    },
     "/testdb": {
       "get": {
         "tags": [
@@ -141,35 +158,6 @@
         "tags": [
           "Movies"
         ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Movies"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateMovieDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateMovieDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateMovieDto"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "OK"
@@ -205,46 +193,6 @@
             }
           }
         ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Movies"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MovieDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MovieDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/MovieDto"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "OK"
@@ -1025,6 +973,19 @@
         },
         "additionalProperties": false
       }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "Enter JWT Bearer token",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
     }
-  }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
 }

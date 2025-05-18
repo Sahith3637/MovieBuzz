@@ -1,5 +1,23 @@
 [
   {
+    "ContainingType": "Program\u002B\u003C\u003Ec",
+    "Method": "\u003C\u003CMain\u003E$\u003Eb__0_6",
+    "RelativePath": "api-stats",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Object",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "MovieBuzz.API.Controllers.BookingsController",
     "Method": "CreateBooking",
     "RelativePath": "Bookings",
@@ -85,22 +103,6 @@
   },
   {
     "ContainingType": "MovieBuzz.API.Controllers.MoviesController",
-    "Method": "AddMovie",
-    "RelativePath": "Movies",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "movieDto",
-        "Type": "MovieBuzz.Core.Dtos.Movies.CreateMovieDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "MovieBuzz.API.Controllers.MoviesController",
     "Method": "GetMovie",
     "RelativePath": "Movies/{id}",
     "HttpMethod": "GET",
@@ -110,27 +112,6 @@
       {
         "Name": "id",
         "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "MovieBuzz.API.Controllers.MoviesController",
-    "Method": "UpdateMovie",
-    "RelativePath": "Movies/{id}",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "movieDto",
-        "Type": "MovieBuzz.Core.Dtos.Movies.MovieDto",
         "IsRequired": true
       }
     ],
@@ -290,7 +271,7 @@
   },
   {
     "ContainingType": "Program\u002B\u003C\u003Ec",
-    "Method": "\u003C\u003CMain\u003E$\u003Eb__0_3",
+    "Method": "\u003C\u003CMain\u003E$\u003Eb__0_8",
     "RelativePath": "testdb",
     "HttpMethod": "GET",
     "IsController": false,

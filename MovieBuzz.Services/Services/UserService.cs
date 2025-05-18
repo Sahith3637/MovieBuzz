@@ -2,11 +2,10 @@
 using MovieBuzz.Core.Dtos.Users;
 using MovieBuzz.Core.Entities;
 using MovieBuzz.Core.Exceptions;
+using MovieBuzz.Core.Security;
 using MovieBuzz.Repository.Interfaces;
 using MovieBuzz.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace MovieBuzz.Services.Services
 {
@@ -14,123 +13,61 @@ namespace MovieBuzz.Services.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IAuthService _authService;
 
-        public UserService(IUnitOfWork unitOfWork, IMapper mapper)
+        public UserService(IUnitOfWork unitOfWork, IMapper mapper, IAuthService authService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _authService = authService;
         }
 
-        //public async Task<UserResponseDto> RegisterUserAsync(RegisterUserDto registerUserDto)
-        //{
-        //    var existingUser = await _unitOfWork.Users.GetUserByUsernameAsync(registerUserDto.UserName);
-        //    if (existingUser != null)
-        //        throw MovieBuzzExceptions.Conflict("Username already exists");
-
-        //    var user = _mapper.Map<User>(registerUserDto);
-        //    user.IsActive = true;
-        //    user.Password = PasswordHasher.HashPassword(registerUserDto.Password);
-
-        //    await _unitOfWork.Users.AddUserAsync(user);
-        //    await _unitOfWork.CompleteAsync();
-
-        //    return _mapper.Map<UserResponseDto>(user);
-        //}
-
-        //public async Task<UserResponseDto> LoginUserAsync(LoginDto loginDto)
-        //{
-        //    var user = await _unitOfWork.Users.GetUserByUsernameAsync(loginDto.UserName)
-        //        ?? throw MovieBuzzExceptions.Unauthorized("Invalid username or password");
-
-        //    if (user.Password != loginDto.Password)
-        //        throw MovieBuzzExceptions.Unauthorized("Invalid username or password");
-
-        //    return _mapper.Map<UserResponseDto>(user);
-        //}
-
-
-
-        public async Task<UserResponseDto> RegisterUserAsync(RegisterUserDto registerUserDto)
+        public async Task<(UserResponseDto user, string token)> RegisterUserAsync(RegisterUserDto registerUserDto)
         {
-           
+            // Check if username exists
             var existingUser = await _unitOfWork.Users.GetUserByUsernameAsync(registerUserDto.UserName);
             if (existingUser != null)
                 throw MovieBuzzExceptions.Conflict("Username already exists");
 
-            
-            var existingPhoneUser = await _unitOfWork.Users.GetUserByPhoneAsync(registerUserDto.PhoneNo);
-            if (existingPhoneUser != null)
-                throw MovieBuzzExceptions.Conflict("Phone number already registered");
-
-            
+            // Check if email exists
             var existingEmailUser = await _unitOfWork.Users.GetUserByEmailAsync(registerUserDto.EmailId);
             if (existingEmailUser != null)
                 throw MovieBuzzExceptions.Conflict("Email already registered");
 
+            // Check if phone exists
+            var existingPhoneUser = await _unitOfWork.Users.GetUserByPhoneAsync(registerUserDto.PhoneNo);
+            if (existingPhoneUser != null)
+                throw MovieBuzzExceptions.Conflict("Phone number already registered");
+
             var user = _mapper.Map<User>(registerUserDto);
             user.IsActive = true;
-            user.CreatedOn = DateTime.Now;
+            user.CreatedOn = DateTime.UtcNow;
             user.Role = "User"; // Default role
-            user.Password = PasswordHasher.HashPassword(registerUserDto.Password); // Hash the password
+            user.Password = PasswordHasher.HashPassword(registerUserDto.Password);
 
             await _unitOfWork.Users.AddUserAsync(user);
             await _unitOfWork.CompleteAsync();
 
-            return _mapper.Map<UserResponseDto>(user);
+            var token = _authService.GenerateJwtToken(user);
+            return (_mapper.Map<UserResponseDto>(user), token);
         }
 
-        //public async Task<UserResponseDto> LoginUserAsync(LoginDto loginDto)
-        //{
-        //    var user = await _unitOfWork.Users.GetUserByUsernameAsync(loginDto.UserName)
-        //        ?? throw MovieBuzzExceptions.Unauthorized("Invalid username or password");
-
-        //    // Check if user is too old (born before 1930) or too young (under 3)
-        //    var today = DateOnly.FromDateTime(DateTime.Today);
-        //    var age = today.Year - user.DateOfBirth.Year;
-        //    if (user.DateOfBirth > today.AddYears(-age)) age--;
-
-        //    if (age < 3)
-        //        throw MovieBuzzExceptions.Unauthorized("User must be at least 3 years old");
-
-        //    if (age > 93) // 2023 - 1930 = 93
-        //        throw MovieBuzzExceptions.Unauthorized("User account is too old");
-
-        //    // Verify password
-        //    if (!PasswordHasher.VerifyPassword(loginDto.Password, user.Password))
-        //        throw MovieBuzzExceptions.Unauthorized("Invalid username or password");
-
-        //    return _mapper.Map<UserResponseDto>(user);
-        //}
-
-
-
-        public async Task<UserResponseDto> LoginUserAsync(LoginDto loginDto)
+        public async Task<(UserResponseDto user, string token)> LoginUserAsync(LoginDto loginDto)
         {
-           
             var user = await _unitOfWork.Users.GetUserByUsernameAsync(loginDto.UserName);
 
-           
-            if (user == null || user.UserName != loginDto.UserName)
+            if (user == null || !PasswordHasher.VerifyPassword(loginDto.Password, user.Password))
             {
                 throw MovieBuzzExceptions.Unauthorized("Invalid username or password");
             }
 
-            // Check if user is too old (born before 1930) or too young (under 3)
-            var today = DateOnly.FromDateTime(DateTime.Today);
-            var age = today.Year - user.DateOfBirth.Year;
-            if (user.DateOfBirth > today.AddYears(-age)) age--;
+            if (!user.IsActive)
+            {
+                throw MovieBuzzExceptions.Unauthorized("User account is inactive");
+            }
 
-            if (age < 3)
-                throw MovieBuzzExceptions.Unauthorized("User must be at least 3 years old");
-
-            if (age > 95) // 2025 - 1930 = 95
-                throw MovieBuzzExceptions.Unauthorized("User account is too old");
-
-            // Verify password
-            if (!PasswordHasher.VerifyPassword(loginDto.Password, user.Password))
-                throw MovieBuzzExceptions.Unauthorized("Invalid username or password");
-
-            return _mapper.Map<UserResponseDto>(user);
+            var token = _authService.GenerateJwtToken(user);
+            return (_mapper.Map<UserResponseDto>(user), token);
         }
 
         public async Task<UserResponseDto> GetUserByIdAsync(int userId)
@@ -146,12 +83,5 @@ namespace MovieBuzz.Services.Services
             var users = await _unitOfWork.Users.GetAllUsersAsync();
             return _mapper.Map<IEnumerable<UserResponseDto>>(users);
         }
-
-        //public async Task<bool> ToggleUserStatusAsync(int userId)
-        //{
-        //    var result = await _unitOfWork.Users.ToggleUserActiveStatusAsync(userId);
-        //    if (result) await _unitOfWork.CompleteAsync();
-        //    return result;
-        //}
     }
 }

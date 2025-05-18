@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Applications\\MovieBuzz\\BackEnd\\MovieBuzz\\MovieBuzz.Utils\\MovieBuzz.Utils.csproj": {}
+    "C:\\MovieBuzzApplication\\MovieBuzz\\Backend(auth)\\MovieBuzz\\MovieBuzz.Utils\\MovieBuzz.Utils.csproj": {}
   },
   "projects": {
-    "C:\\Applications\\MovieBuzz\\BackEnd\\MovieBuzz\\MovieBuzz.Utils\\MovieBuzz.Utils.csproj": {
+    "C:\\MovieBuzzApplication\\MovieBuzz\\Backend(auth)\\MovieBuzz\\MovieBuzz.Utils\\MovieBuzz.Utils.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Applications\\MovieBuzz\\BackEnd\\MovieBuzz\\MovieBuzz.Utils\\MovieBuzz.Utils.csproj",
+        "projectUniqueName": "C:\\MovieBuzzApplication\\MovieBuzz\\Backend(auth)\\MovieBuzz\\MovieBuzz.Utils\\MovieBuzz.Utils.csproj",
         "projectName": "MovieBuzz.Utils",
-        "projectPath": "C:\\Applications\\MovieBuzz\\BackEnd\\MovieBuzz\\MovieBuzz.Utils\\MovieBuzz.Utils.csproj",
-        "packagesPath": "C:\\Users\\Venkat Vadlakonda\\.nuget\\packages\\",
-        "outputPath": "C:\\Applications\\MovieBuzz\\BackEnd\\MovieBuzz\\MovieBuzz.Utils\\obj\\",
+        "projectPath": "C:\\MovieBuzzApplication\\MovieBuzz\\Backend(auth)\\MovieBuzz\\MovieBuzz.Utils\\MovieBuzz.Utils.csproj",
+        "packagesPath": "C:\\Users\\Sai Sahith Ajju\\.nuget\\packages\\",
+        "outputPath": "C:\\MovieBuzzApplication\\MovieBuzz\\Backend(auth)\\MovieBuzz\\MovieBuzz.Utils\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Venkat Vadlakonda\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Sai Sahith Ajju\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -77,7 +77,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.204/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

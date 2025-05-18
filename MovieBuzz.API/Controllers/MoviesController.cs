@@ -1,10 +1,188 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿//using Microsoft.AspNetCore.Mvc;
+//using MovieBuzz.Core.Dtos.Movies;
+//using MovieBuzz.Services.Interfaces;
+//using Microsoft.Extensions.Logging;
+
+//namespace MovieBuzz.API.Controllers
+//{
+//    [Route("[controller]")]
+//    [ApiController]
+//    public class MoviesController : ControllerBase
+//    {
+//        private readonly IMovieService _movieService;
+//        private readonly ILogger<MoviesController> _logger;
+
+//        public MoviesController(
+//            IMovieService movieService,
+//            ILogger<MoviesController> logger)
+//        {
+//            _movieService = movieService;
+//            _logger = logger;
+//        }
+
+//        [HttpGet]
+//        public async Task<IActionResult> GetAllMovies()
+//        {
+//            _logger.LogInformation("Fetching all movies");
+
+//            var movies = await _movieService.GetAllMoviesAsync();
+
+//            _logger.LogInformation("Retrieved {MovieCount} movies", movies.Count());
+
+//            return Ok(new
+//            {
+//                Success = true,
+//                Data = movies,
+//                Message = "All movies retrieved successfully"
+//            });
+//        }
+
+//        [HttpGet("active")]
+//        public async Task<IActionResult> GetActiveMovies()
+//        {
+//            _logger.LogInformation("Fetching active movies");
+
+//            var movies = await _movieService.GetActiveMoviesAsync();
+
+//            _logger.LogInformation("Retrieved {ActiveMovieCount} active movies", movies.Count());
+
+//            return Ok(new
+//            {
+//                Success = true,
+//                Data = movies,
+//                Message = "Active movies retrieved successfully"
+//            });
+//        }
+
+//        [HttpGet("{id}")]
+//        public async Task<IActionResult> GetMovie(int id)
+//        {
+//            _logger.LogInformation("Fetching movie with ID {MovieId}", id);
+
+//            var movie = await _movieService.GetMovieByIdAsync(id);
+
+//            _logger.LogInformation("Movie {MovieId} retrieved successfully", id);
+
+//            return Ok(new
+//            {
+//                Success = true,
+//                Data = movie,
+//                Message = "Movie retrieved successfully"
+//            });
+//        }
+
+//        [HttpPost]
+//        public async Task<IActionResult> AddMovie([FromBody] CreateMovieDto movieDto)
+//        {
+//            _logger.LogInformation("Adding new movie: {MovieTitle}", movieDto.MovieName);
+
+//            var movie = await _movieService.AddMovieAsync(movieDto);
+
+//            _logger.LogInformation("Movie {MovieId} added successfully", movie.MovieId);
+
+//            return CreatedAtAction(nameof(GetMovie), new { id = movie.MovieId }, new
+//            {
+//                Success = true,
+//                Data = movie,
+//                Message = "Movie added successfully"
+//            });
+//        }
+
+//        [HttpPut("{id}")]
+//        public async Task<IActionResult> UpdateMovie(int id, [FromBody] MovieDto movieDto)
+//        {
+//            _logger.LogInformation("Updating movie {MovieId}", id);
+
+//            var movie = await _movieService.UpdateMovieAsync(id, movieDto);
+
+//            _logger.LogInformation("Movie {MovieId} updated successfully", id);
+
+//            return Ok(new
+//            {
+//                Success = true,
+//                Data = movie,
+//                Message = "Movie updated successfully"
+//            });
+//        }
+
+//        [HttpPatch("{id}/toggle-status")]
+//        public async Task<IActionResult> ToggleMovieStatus(int id)
+//        {
+//            _logger.LogInformation("Toggling status for movie {MovieId}", id);
+
+//            var result = await _movieService.ToggleMovieStatusAsync(id);
+
+//            if (result)
+//            {
+//                _logger.LogInformation("Successfully toggled status for movie {MovieId}", id);
+//                return Ok(new
+//                {
+//                    Success = true,
+//                    Message = "Movie status toggled successfully"
+//                });
+//            }
+
+//            _logger.LogWarning("Movie {MovieId} not found for status toggle", id);
+//            return NotFound(new
+//            {
+//                Success = false,
+//                Message = "Movie not found"
+//            });
+//        }
+
+//        [HttpPost("with-shows")]
+//        public async Task<IActionResult> CreateMovieWithShows([FromBody] MovieWithShowsDto dto)
+//        {
+//            _logger.LogInformation("Creating movie with {ShowCount} shows", dto.Shows.Count);
+
+//            var result = await _movieService.CreateMovieWithShowsAsync(dto);
+
+//            _logger.LogInformation(
+//                "Created movie {MovieId} with {ShowCount} shows",
+//                result.Movie.MovieId,
+//                result.Shows.Count);
+
+//            return CreatedAtAction(
+//                nameof(GetMovie),
+//                new { id = result.Movie.MovieId },
+//                new
+//                {
+//                    Success = true,
+//                    Data = result,
+//                    Message = $"Movie and {result.Shows.Count} shows created successfully"
+//                });
+//        }
+
+//        [HttpPut("with-shows/{movieId}")]
+//        public async Task<IActionResult> UpdateMovieWithShows(int movieId, [FromBody] UpdateMovieWithShowsDto dto)
+//        {
+//            _logger.LogInformation(
+//                "Updating movie {MovieId} with {ShowCount} shows",
+//                movieId,
+//                dto.Shows.Count);
+
+//            var result = await _movieService.UpdateMovieWithShowsAsync(movieId, dto);
+
+//            _logger.LogInformation(
+//                "Updated movie {MovieId} with {ShowCount} shows",
+//                movieId,
+//                result.Shows.Count);
+
+//            return Ok(new
+//            {
+//                Success = true,
+//                Data = result,
+//                Message = $"Movie and {result.Shows.Count} shows updated successfully"
+//            });
+//        }
+//    }
+//}
+
+
+using Microsoft.AspNetCore.Mvc;
 using MovieBuzz.Core.Dtos.Movies;
 using MovieBuzz.Services.Interfaces;
-using MovieBuzz.Core.Exceptions;
-using MovieBuzz.Core.Dtos.Shows;
-using MovieBuzz.Core.DTOs.Shows;
-using MovieBuzz.Services.Services;
+using Microsoft.Extensions.Logging;
 
 namespace MovieBuzz.API.Controllers
 {
@@ -13,260 +191,200 @@ namespace MovieBuzz.API.Controllers
     public class MoviesController : ControllerBase
     {
         private readonly IMovieService _movieService;
+        private readonly ILogger<MoviesController> _logger;
 
-        public MoviesController(IMovieService movieService)
+        public MoviesController(
+            IMovieService movieService,
+            ILogger<MoviesController> logger)
         {
             _movieService = movieService;
+            _logger = logger;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllMovies()
         {
-            try
+            _logger.LogInformation("Fetching all movies");
+
+            var movies = await _movieService.GetAllMoviesAsync();
+
+            _logger.LogInformation("Retrieved {MovieCount} movies", movies?.Count() ?? 0);
+
+            return Ok(new
             {
-                var movies = await _movieService.GetAllMoviesAsync();
-                return Ok(new
-                {
-                    Success = true,
-                    Data = movies,
-                    Message = "All movies retrieved successfully"
-                });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new
-                {
-                    Success = false,
-                    Message = $"Error retrieving movies: {ex.Message}"
-                });
-            }
+                Success = true,
+                Data = movies,
+                Message = "All movies retrieved successfully"
+            });
         }
 
         [HttpGet("active")]
         public async Task<IActionResult> GetActiveMovies()
         {
-            try
+            _logger.LogInformation("Fetching active movies");
+
+            var movies = await _movieService.GetActiveMoviesAsync();
+
+            _logger.LogInformation("Retrieved {ActiveMovieCount} active movies", movies?.Count() ?? 0);
+
+            return Ok(new
             {
-                var movies = await _movieService.GetActiveMoviesAsync();
-                return Ok(new
-                {
-                    Success = true,
-                    Data = movies,
-                    Message = "Active movies retrieved successfully"
-                });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new
-                {
-                    Success = false,
-                    Message = $"Error retrieving active movies: {ex.Message}"
-                });
-            }
+                Success = true,
+                Data = movies,
+                Message = "Active movies retrieved successfully"
+            });
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetMovie(int id)
         {
-            try
-            {
-                var movie = await _movieService.GetMovieByIdAsync(id);
-                return Ok(new
-                {
-                    Success = true,
-                    Data = movie,
-                    Message = "Movie retrieved successfully"
-                });
-            }
-            catch (NotFoundException ex)
-            {
-                return NotFound(new
-                {
-                    Success = false,
-                    Message = ex.Message
-                });
-            }
-        }
+            _logger.LogInformation("Fetching movie with ID {MovieId}", id);
 
-        [HttpPost]
-        public async Task<IActionResult> AddMovie([FromBody] CreateMovieDto movieDto)
-        {
-            try
-            {
-                var movie = await _movieService.AddMovieAsync(movieDto);
-                return CreatedAtAction(nameof(GetMovie), new { id = movie.MovieId }, new
-                {
-                    Success = true,
-                    Data = movie,
-                    Message = "Movie added successfully"
-                });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new
-                {
-                    Success = false,
-                    Message = $"Error adding movie: {ex.Message}"
-                });
-            }
-        }
+            var movie = await _movieService.GetMovieByIdAsync(id);
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateMovie(int id, [FromBody] MovieDto movieDto)
-        {
-            try
+            if (movie == null)
             {
-                var movie = await _movieService.UpdateMovieAsync(id, movieDto);
-                return Ok(new
-                {
-                    Success = true,
-                    Data = movie,
-                    Message = "Movie updated successfully"
-                });
-            }
-            catch (NotFoundException ex)
-            {
-                return NotFound(new
-                {
-                    Success = false,
-                    Message = ex.Message
-                });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new
-                {
-                    Success = false,
-                    Message = $"Error updating movie: {ex.Message}"
-                });
-            }
-        }
-
-        [HttpPatch("{id}/toggle-status")]
-        public async Task<IActionResult> ToggleMovieStatus(int id)
-        {
-            try
-            {
-                var result = await _movieService.ToggleMovieStatusAsync(id);
-                if (result)
-                {
-                    return Ok(new
-                    {
-                        Success = true,
-                        Message = "Movie status toggled successfully"
-                    });
-                }
+                _logger.LogWarning("Movie {MovieId} not found", id);
                 return NotFound(new
                 {
                     Success = false,
                     Message = "Movie not found"
                 });
             }
-            catch (Exception ex)
+
+            _logger.LogInformation("Movie {MovieId} retrieved successfully", id);
+
+            return Ok(new
             {
-                return StatusCode(500, new
-                {
-                    Success = false,
-                    Message = $"Error toggling movie status: {ex.Message}"
-                });
-            }
+                Success = true,
+                Data = movie,
+                Message = "Movie retrieved successfully"
+            });
         }
 
-        // added
+        //[HttpPost]
+        //public async Task<IActionResult> AddMovie([FromBody] CreateMovieDto movieDto)
+        //{
+        //    _logger.LogInformation("Adding new movie: {MovieTitle}", movieDto.MovieName);
+
+        //    var movie = await _movieService.AddMovieAsync(movieDto);
+
+        //    _logger.LogInformation("Movie {MovieId} added successfully", movie.MovieId);
+
+        //    return CreatedAtAction(nameof(GetMovie), new { id = movie.MovieId }, new
+        //    {
+        //        Success = true,
+        //        Data = movie,
+        //        Message = "Movie added successfully"
+        //    });
+        //}
+
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> UpdateMovie(int id, [FromBody] MovieDto movieDto)
+        //{
+        //    _logger.LogInformation("Updating movie {MovieId}", id);
+
+        //    var movie = await _movieService.UpdateMovieAsync(id, movieDto);
+
+        //    if (movie == null)
+        //    {
+        //        _logger.LogWarning("Movie {MovieId} not found", id);
+        //        return NotFound(new
+        //        {
+        //            Success = false,
+        //            Message = "Movie not found"
+        //        });
+        //    }
+
+        //    _logger.LogInformation("Movie {MovieId} updated successfully", id);
+
+        //    return Ok(new
+        //    {
+        //        Success = true,
+        //        Data = movie,
+        //        Message = "Movie updated successfully"
+        //    });
+        //}
+
+        [HttpPatch("{id}/toggle-status")]
+        public async Task<IActionResult> ToggleMovieStatus(int id)
+        {
+            _logger.LogInformation("Toggling status for movie {MovieId}", id);
+
+            var result = await _movieService.ToggleMovieStatusAsync(id);
+
+            if (result)
+            {
+                _logger.LogInformation("Successfully toggled status for movie {MovieId}", id);
+                return Ok(new
+                {
+                    Success = true,
+                    Message = "Movie status toggled successfully"
+                });
+            }
+
+            _logger.LogWarning("Movie {MovieId} not found for status toggle", id);
+            return NotFound(new
+            {
+                Success = false,
+                Message = "Movie not found"
+            });
+        }
+
         [HttpPost("with-shows")]
         public async Task<IActionResult> CreateMovieWithShows([FromBody] MovieWithShowsDto dto)
         {
-            try
-            {
-                var result = await _movieService.CreateMovieWithShowsAsync(dto);
-                return CreatedAtAction(nameof(GetMovie), new { id = result.Movie.MovieId }, new
+            _logger.LogInformation("Creating movie with {ShowCount} shows", dto.Shows?.Count ?? 0);
+
+            var result = await _movieService.CreateMovieWithShowsAsync(dto);
+
+            _logger.LogInformation(
+                "Created movie {MovieId} with {ShowCount} shows",
+                result.Movie.MovieId,
+                result.Shows?.Count ?? 0);
+
+            return CreatedAtAction(
+                nameof(GetMovie),
+                new { id = result.Movie.MovieId },
+                new
                 {
                     Success = true,
                     Data = result,
-                    Message = $"Movie and {result.Shows.Count} shows created successfully"
+                    Message = $"Movie and {result.Shows?.Count ?? 0} shows created successfully"
                 });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new
-                {
-                    Success = false,
-                    Message = $"Error creating movie with shows: {ex.Message}"
-                });
-            }
         }
 
         [HttpPut("with-shows/{movieId}")]
         public async Task<IActionResult> UpdateMovieWithShows(int movieId, [FromBody] UpdateMovieWithShowsDto dto)
         {
-            try
+            _logger.LogInformation(
+                "Updating movie {MovieId} with {ShowCount} shows",
+                movieId,
+                dto.Shows?.Count ?? 0);
+
+            var result = await _movieService.UpdateMovieWithShowsAsync(movieId, dto);
+
+            if (result == null)
             {
-                var result = await _movieService.UpdateMovieWithShowsAsync(movieId, dto);
-                return Ok(new
-                {
-                    Success = true,
-                    Data = result,
-                    Message = $"Movie and {result.Shows.Count} shows updated successfully"
-                });
-            }
-            catch (NotFoundException ex)
-            {
-                return NotFound(new { Success = false, Message = ex.Message });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new
+                _logger.LogWarning("Movie {MovieId} not found for update", movieId);
+                return NotFound(new
                 {
                     Success = false,
-                    Message = $"Error updating movie with shows: {ex.Message}"
+                    Message = "Movie not found"
                 });
             }
+
+            _logger.LogInformation(
+                "Updated movie {MovieId} with {ShowCount} shows",
+                movieId,
+                result.Shows?.Count ?? 0);
+
+            return Ok(new
+            {
+                Success = true,
+                Data = result,
+                Message = $"Movie and {result.Shows?.Count ?? 0} shows updated successfully"
+            });
         }
-
-        //[HttpPost("with-shows")]
-        //public async Task<IActionResult> CreateMovieWithShows([FromBody] MovieWithShowsDto dto)
-        //{
-        //    try
-        //    {
-        //        // 1. Create the movie first
-        //        var movieResponse = await _movieService.AddMovieAsync(dto.Movie);
-
-        //        // 2. Prepare shows with the generated movieId
-        //        var showsToCreate = dto.Shows.Select(s => new CreateShowDto
-        //        {
-        //            MovieId = movieResponse.MovieId,
-        //            ShowTime = s.ShowTime,
-        //            ShowDate = s.ShowDate,
-        //            AvailableSeats = s.AvailableSeats
-        //        }).ToList();
-
-        //        // 3. Create all shows
-        //        var createdShows = new List<ShowResponseDto>();
-        //        foreach (var showDto in showsToCreate)
-        //        {
-        //            var show = await _showService.AddShowAsync(showDto);
-        //            createdShows.Add(show);
-        //        }
-
-        //        return CreatedAtAction(nameof(GetMovie), new { id = movieResponse.MovieId }, new
-        //        {
-        //            Success = true,
-        //            Data = new
-        //            {
-        //                Movie = movieResponse,
-        //                Shows = createdShows
-        //            },
-        //            Message = $"Movie and {createdShows.Count} shows created successfully"
-        //        });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, new
-        //        {
-        //            Success = false,
-        //            Message = $"Error creating movie with shows: {ex.Message}"
-        //        });
-        //    }
-        //}
     }
 }
