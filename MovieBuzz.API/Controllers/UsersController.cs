@@ -1,165 +1,120 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MovieBuzz.Core.Dtos.Users;
-using MovieBuzz.Services.Interfaces;
 using MovieBuzz.Core.Exceptions;
+using MovieBuzz.Services.Interfaces;
+using Microsoft.Extensions.Logging;
+using System.Security.Claims;
 
 namespace MovieBuzz.API.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly ILogger<UsersController> _logger;
 
-        public UsersController(IUserService userService)
+        public UsersController(
+            IUserService userService,
+            ILogger<UsersController> logger)
         {
             _userService = userService;
+            _logger = logger;
         }
 
         [HttpPost("register")]
+        [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] RegisterUserDto registerDto)
         {
-            try
-            {
-                var user = await _userService.RegisterUserAsync(registerDto);
-                return CreatedAtAction(nameof(GetUser), new { id = user.UserId }, new
+            _logger.LogInformation("Registering new user with username {Username}", registerDto.UserName);
+
+            var (user, token) = await _userService.RegisterUserAsync(registerDto);
+
+            _logger.LogInformation("User {UserId} registered successfully", user.UserId);
+
+            return CreatedAtAction(
+                nameof(GetUser),
+                new { id = user.UserId },
+                new
                 {
                     Success = true,
-                    Data = user,
+                    Data = new { User = user, Token = token },
                     Message = "User registered successfully"
                 });
-            }
-            catch (ConflictException ex)
-            {
-                return Conflict(new
-                {
-                    Success = false,
-                    Message = ex.Message
-                });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new
-                {
-                    Success = false,
-                    Message = $"Error registering user: {ex.Message}"
-                });
-            }
         }
 
         [HttpPost("login")]
+        [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
-            try
+            _logger.LogInformation("Login attempt for username {Username}", loginDto.UserName);
+
+            var (user, token) = await _userService.LoginUserAsync(loginDto);
+
+            _logger.LogInformation("User {UserId} logged in successfully", user.UserId);
+
+            return Ok(new
             {
-                var user = await _userService.LoginUserAsync(loginDto);
-                return Ok(new
-                {
-                    Success = true,
-                    Data = user,
-                    Message = "Login successful"
-                });
-            }
-            catch (UnauthorizedException ex)
-            {
-                return Unauthorized(new
-                {
-                    Success = false,
-                    Message = ex.Message
-                });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new
-                {
-                    Success = false,
-                    Message = $"Error during login: {ex.Message}"
-                });
-            }
+                Success = true,
+                Data = new { User = user, Token = token },
+                Message = "Login successful"
+            });
         }
 
         [HttpGet]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> GetAllUsers()
         {
-            try
+            _logger.LogInformation("Fetching all users");
+
+            var users = await _userService.GetAllUsersAsync();
+
+            _logger.LogInformation("Retrieved {UserCount} users", users.Count());
+
+            return Ok(new
             {
-                var users = await _userService.GetAllUsersAsync();
-                return Ok(new
-                {
-                    Success = true,
-                    Data = users,
-                    Message = "All users retrieved successfully"
-                });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new
-                {
-                    Success = false,
-                    Message = $"Error retrieving users: {ex.Message}"
-                });
-            }
+                Success = true,
+                Data = users,
+                Message = "All users retrieved successfully"
+            });
         }
 
         [HttpGet("{id}")]
+        [Authorize(Policy = "AdminOrUser")]
         public async Task<IActionResult> GetUser(int id)
         {
-            try
-            {
-                var user = await _userService.GetUserByIdAsync(id);
-                return Ok(new
-                {
-                    Success = true,
-                    Data = user,
-                    Message = "User retrieved successfully"
-                });
-            }
-            catch (NotFoundException ex)
-            {
-                return NotFound(new
-                {
-                    Success = false,
-                    Message = ex.Message
-                });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new
-                {
-                    Success = false,
-                    Message = $"Error retrieving user: {ex.Message}"
-                });
-            }
-        }
+            _logger.LogDebug("Fetching user {UserId}", id);
 
-        // [HttpPatch("{id}/toggle-status")]
-        // public async Task<IActionResult> ToggleUserStatus(int id)
-        // {
-        //     try
-        //     {
-        //         var result = await _userService.ToggleUserStatusAsync(id);
-        //         if (result)
-        //         {
-        //             return Ok(new
-        //             {
-        //                 Success = true,
-        //                 Message = "User status toggled successfully"
-        //             });
-        //         }
-        //         return NotFound(new
-        //         {
-        //             Success = false,
-        //             Message = "User not found"
-        //         });
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         return StatusCode(500, new
-        //         {
-        //             Success = false,
-        //             Message = $"Error toggling user status: {ex.Message}"
-        //         });
-        //     }
-        // }
+            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
+            var currentUserRole = User.FindFirst(ClaimTypes.Role)?.Value ?? string.Empty;
+
+            if (currentUserRole != "Admin" && currentUserId != id)
+            {
+                _logger.LogWarning("User {CurrentUserId} attempted to access user {RequestedUserId} data",
+                    currentUserId, id);
+
+                throw MovieBuzzExceptions.Unauthorized("Access denied. You are not allowed to view this user's details.");
+            }
+
+            var user = await _userService.GetUserByIdAsync(id);
+
+            if (user == null)
+            {
+                _logger.LogWarning("User {UserId} not found", id);
+                throw MovieBuzzExceptions.NotFound($"User with ID {id} not found.");
+            }
+
+            _logger.LogInformation("Retrieved user {UserId} with username {Username}",
+                id, user.UserName);
+
+            return Ok(new
+            {
+                Success = true,
+                Data = user,
+                Message = "User retrieved successfully"
+            });
+        }
     }
 }

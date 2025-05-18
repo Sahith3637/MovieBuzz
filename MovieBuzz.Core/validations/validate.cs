@@ -11,7 +11,7 @@ namespace MovieBuzz.Core.validations
     {
         public static class ValidGenres
         {
-            public static readonly HashSet<string> Genres = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+            public static readonly HashSet<string> Genres = new HashSet<string>
         {
             "Action",
             "Adventure",
@@ -61,7 +61,7 @@ namespace MovieBuzz.Core.validations
             if (invalidGenres.Any())
             {
                 var invalidList = string.Join(", ", invalidGenres);
-                var allowedList = string.Join(", ", ValidGenres.Genres);
+                var allowedList = string.Join(", ", ValidGenres.Genres.OrderBy(g => g));
                 return new ValidationResult($"Invalid genre(s): {invalidList}. Allowed genres are: {allowedList}.");
             }
 
